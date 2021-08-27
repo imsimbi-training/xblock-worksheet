@@ -35,7 +35,7 @@ setup(
     ],
     entry_points={
         'xblock.v1': [
-            'worksheet = worksheet:WorksheetXBlock',
+            'worksheet = worksheet:WorksheetBlock',
         ]
     },
     package_data=package_data("worksheet", ["static", "public"]),

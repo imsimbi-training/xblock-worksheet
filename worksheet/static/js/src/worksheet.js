@@ -1,5 +1,5 @@
-/* Javascript for WorksheetXBlock. */
-function WorksheetXBlock(runtime, element) {  
+/* Javascript for WorksheetBlock. */
+function WorksheetBlock(runtime, element) {  
     function editField(event) {
         console.log("cell gains focus", event);
         var pre = $('pre', event.target.parentElement);

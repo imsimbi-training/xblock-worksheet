@@ -1,1 +1,1 @@
-from .worksheet import WorksheetXBlock
+from .worksheet import WorksheetBlock

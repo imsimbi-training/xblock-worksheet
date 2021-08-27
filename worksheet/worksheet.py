@@ -6,7 +6,7 @@ from xblock.core import XBlock
 from xblock.fields import Integer, Scope
 
 
-class WorksheetXBlock(XBlock):
+class WorksheetBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
     """
@@ -28,14 +28,14 @@ class WorksheetXBlock(XBlock):
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
         """
-        The primary view of the WorksheetXBlock, shown to students
+        The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
         html = self.resource_string("static/html/worksheet.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
-        frag.initialize_js('WorksheetXBlock')
+        frag.initialize_js('WorksheetBlock')
         return frag
 
     # TO-DO: change this handler to perform your own actions.  You may need more
@@ -57,10 +57,10 @@ class WorksheetXBlock(XBlock):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
-            ("WorksheetXBlock",
+            ("WorksheetBlock",
              """<worksheet/>
              """),
-            ("Multiple WorksheetXBlock",
+            ("Multiple WorksheetBlock",
              """<vertical_demo>
                 <worksheet/>
                 <worksheet/>

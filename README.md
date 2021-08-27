@@ -15,6 +15,14 @@ the python virtual environment:
 pip install git+https://github.com/imsimbi-training/xblock-worksheet
 ```
 
+Run the workbench in `xblock-sdk`:
+
+```
+python manage.py runserver
+```
+
+The XBlock should be available in the workbench
+
 ## Setting up a worksheet
 
 A sample worksheet is shown below:
