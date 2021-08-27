@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- The first thing in any HTML file should be the charset -->
+  <meta charset="utf-8">
+
+  <!-- Make the page mobile compatible -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Allow installing the app to the homescreen -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="https://imsimbi-documents-public.s3.amazonaws.com/xblock-table/xblock-table.css">  
+</head>
+<body>
+
+<table class="xblock-table">
+    <tbody>
+        <tr>
+            <td class="header"></td>
+            <td class="header">Column 1</td>
+            <td class="header">Column 2</td></tr>
+        <tr>
+            <td class="header">Row 1</td>
+            <td class="static">Example 1</td>
+            <td class="static">Example 2</td></tr>
+        <tr class="repeat">
+            <td class="header">Row 2</td>
+            <td onclick="focusIn(this)" onblur="focusOut(this)" name="example1" class="input"><textarea onblur="focusOut(this)" hidden></textarea><pre>Enter test 1 here</pre></td>
+            <td onclick="focusIn(this)" onblur="focusOut(this)" name="example2" class="input"><textarea onblur="focusOut(this)" hidden></textarea><pre>Enter test 2 here</pre></td>
+            <td><button onclick="appendRow(this)">+</button><button hidden onclick="deleteRow(this)">-</button></td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    console.log('Starting...')
+    function focusIn(td) {
+        console.log("cell gains focus");
+        var ta = td.children[0];
+        var pre = td.children[1];
+        ta.hidden = false;
+        ta.focus();
+        td.children[1].hidden = true;
+
+    }
+    function focusOut(ta) {
+        var td = ta.parentElement;
+        var ta = td.children[0];
+        var pre = td.children[1];
+        console.log("cell lose focus");
+        ta.hidden = true;
+        pre.hidden = false;
+        if (ta.value || td.classList.contains("value")) {
+            pre.innerText = ta.value;
+            td.classList.add("value");
+        }
+    }
+    function deleteRow(bt) {
+        var tr = bt.parentElement.parentElement;
+        tr.parentElement.removeChild(tr);
+    }
+    function appendRow(bt) {
+        var td = bt.parentElement;
+        var tr = td.parentElement;
+        var tr2 = tr.cloneNode(true);
+        var td2 = tr2.children[tr2.children.length - 1];
+        td2.children[1].hidden = false;
+        // td.children[0].hidden = true;
+        tr.parentElement.appendChild(tr2);
+    }
+
+</script>
+</body>
+    
+</html>

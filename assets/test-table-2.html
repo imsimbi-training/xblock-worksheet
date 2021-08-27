@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- The first thing in any HTML file should be the charset -->
+  <meta charset="utf-8">
+
+  <!-- Make the page mobile compatible -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Allow installing the app to the homescreen -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://imsimbi-documents-public.s3.amazonaws.com/xblock-table/xblock-table.css">  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="content"></div>
+<div id="worksheet">
+<div class="xbt-table">
+        <div class="xbt-row">
+            <div class="xbt-cell header"></div>
+            <div class="xbt-cell header">Column 1</div>
+            <div class="xbt-cell header">Column 2</div>
+        </div>
+        <div class="xbt-row">
+            <div class="xbt-cell header">Row 1</div>
+            <div class="xbt-cell static">Example 1</div>
+            <div class="xbt-cell static">Example 2</div>
+        </div>
+        <div class="xbt-row repeat">
+            <div class="xbt-cell header">Row 2</div>
+            <div name="example1" class="xbt-cell input">Enter test 1 here</div>
+            <div name="example2" class="xbt-cell input">Enter test 2 here</div>
+        </div>
+</div>
+<div id="repeat-buttons"><p>You can add and delete rows to the worksheet</p></div>
+</div>
+<script>
+    function editField(event) {
+        console.log("cell gains focus", event);
+        var pre = $('pre', event.target.parentElement);
+        console.log("pre gains focus", pre);
+        var inputContainer = pre.parent();
+        console.log("parent gains focus", inputContainer);
+        var ta = $('textarea', inputContainer);
+        console.log("ta gains focus", ta);
+        ta.show();
+        pre.hide();
+        ta.focus();
+    }
+    function saveField(event) {
+        console.log("cell lose focus", event);
+        var ta = $('textarea', event.target.parentElement);
+        var inputContainer = ta.parent();
+        console.log("parent gains focus", inputContainer);
+        var pre = $('pre', inputContainer);
+        ta.hide();
+        pre.show();
+        var text = ta.val();
+        pre.text(text || ta.attr('placeholder'));
+        if (text) inputContainer.addClass('value'); else inputContainer.removeClass('value');
+
+    }
+    function deleteRepeatingSection(event) {
+        $('.repeat.repeat-clone', element).last().remove();
+    }
+    function addRepeatingSection(event) {
+        console.log('bt', event);
+        var td = $('.repeat.repeat-original', element);
+        var td2 = td.clone(true);
+        $('.input', td2).each((function() {
+            var placeholder = $('textarea', this).attr('placeholder');
+            console.log('placeholder', placeholder);
+            $('textarea', this).val('');
+            $('pre', this).text(placeholder);
+        }))
+        td2.addClass('repeat-clone');
+        td2.removeClass('repeat-original');
+        // td.children[0].hidden = true;
+        td.parent().append(td2);
+    }
+
+    var element = $('#worksheet');
+
+    $('.repeat').addClass('repeat-original');
+
+    $('.input', element)
+    .click(editField)
+    .append(function (i, e) {
+        var pre = $('<pre></pre>');
+        pre.text(e);
+        return pre;
+    })
+    .append(function (i, e) {
+        var inner = $(this).contents().filter(function () {return this.nodeType === 3;}).text();
+        console.log('inner', inner);
+        return $('<textarea hidden></textarea>').blur(saveField).attr('placeholder', inner);
+    })
+    // remove the inner text node
+    .contents().filter(function () {return this.nodeType === 3;}).remove();
+    var tdAddButton = $('<button class="add"><i class="fa fa-2x fa-plus"></i></button>')
+    var tdDeleteButton = $('<button class="delete"><i class="fa fa-2x fa-trash-o"></i></button>');
+    tdAddButton.click(addRepeatingSection);
+    tdDeleteButton.click(deleteRepeatingSection);
+    $('#repeat-buttons', element).append(tdAddButton, tdDeleteButton);
+</script>
+</body>
+    
+</html>
