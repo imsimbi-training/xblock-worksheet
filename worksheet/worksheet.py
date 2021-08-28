@@ -33,7 +33,6 @@ class WorksheetBlock(XBlock):
         when viewing courses.
         """
         log.info('WorksheetBlock.studentView')
-        print('WorksheetBlock.studentView')
         html = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
@@ -48,7 +47,6 @@ class WorksheetBlock(XBlock):
         """
 
         log.info('data %O', data)
-        print('data', data)
         self.responses = data['responses']
 
         return {'responses': data['responses'] }
