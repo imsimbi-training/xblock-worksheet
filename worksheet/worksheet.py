@@ -39,16 +39,12 @@ class WorksheetBlock(XBlock):
         return frag
 
     @XBlock.json_handler
-    def vote(self, data, suffix=''):  # pylint: disable=unused-argument
+    def submit(self, data, suffix=''):  # pylint: disable=unused-argument
         """
-        Update the vote count in response to a user action.
+        Update the worksheet responses
         """
-        # Here is where we would prevent a student from voting twice, but then
-        # we couldn't click more than once in the demo!
-        #
-        #     if self.voted:
-        #         log.error("cheater!")
-        #         return
+
+        print('responses: ' + data.responses)
 
         self.responses = data.responsess
 
