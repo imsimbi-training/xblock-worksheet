@@ -31,6 +31,7 @@ class WorksheetBlock(XBlock):
         The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
+        log.info('WorksheetBlock.studentView')
         html = self.resource_string("static/html/worksheet.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
@@ -45,8 +46,6 @@ class WorksheetBlock(XBlock):
         """
 
         log.info('responses %O', data.responses)
-        print('responses: ' + data.responses)
-
         self.responses = data.responsess
 
         return {'responses': data.responses }
