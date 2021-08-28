@@ -47,8 +47,8 @@ class WorksheetBlock(XBlock):
         Update the worksheet responses
         """
 
-        log.info('responses %O', data.responses)
-        print('responses', data.responses)
+        log.info('data %O', data)
+        print('data', data)
         self.responses = data.responsess
 
         return {'responses': data.responses }
