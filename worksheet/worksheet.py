@@ -6,6 +6,7 @@ from xblock.core import XBlock
 from xblock.fields import Dict, Scope
 import logging;
 
+log = logging.getLogger(__name__)
 class WorksheetBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
