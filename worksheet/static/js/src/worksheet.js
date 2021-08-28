@@ -45,11 +45,11 @@ function WorksheetBlock(runtime, element) {
     }
 
     function submitSuccess(votes) {
-        console.logs('submitSuccess');
+        console.log('submitSuccess');
     }
 
     function submitError(xhtml, error, errorThrown) {
-        console.logs('submitError', error, errorThrown);
+        console.log('submitError', error, errorThrown);
     }
 
     function submit() {
