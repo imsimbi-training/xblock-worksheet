@@ -62,14 +62,12 @@ function WorksheetBlock(runtime, element) {
         var responses = {};
         names.forEach((o, i) => responses[o] = values[i]);
         console.log('responses', responses);
-        $('.upvote', element).click(function() {
-            $.ajax({
-                type: "POST",
-                url: handlerUrl,
-                data: JSON.stringify({responses: responses}),
-                success: submitSuccess,
-                error: submitError
-            });
+        $.ajax({
+            type: "POST",
+            url: handlerUrl,
+            data: JSON.stringify({responses: responses}),
+            success: submitSuccess,
+            error: submitError
         });
     }
 
