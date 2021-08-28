@@ -48,8 +48,8 @@ function WorksheetBlock(runtime, element) {
         console.logs('submitSuccess');
     }
 
-    function submitError(error) {
-        console.logs('submitError', error);
+    function submitError(xhtml, error, errorThrown) {
+        console.logs('submitError', error, errorThrown);
     }
 
     function submit() {

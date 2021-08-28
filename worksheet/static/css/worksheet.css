@@ -122,7 +122,7 @@ body {
     font-size: 100%;
   }
   
-  #repeat-buttons button {
+  #buttons button {
     background-color: #f1bb4e;
   }
 
@@ -162,7 +162,7 @@ body {
   
   
   @media all and (max-width:30em) {
-    #repeat-buttons button {
+    #buttons button {
       display:block;
       margin:0.2em auto;
     }
