@@ -49,9 +49,9 @@ class WorksheetBlock(XBlock):
 
         log.info('data %O', data)
         print('data', data)
-        self.responses = data.responsess
+        self.responses = data['responses']
 
-        return {'responses': data.responses }
+        return {'responses': data['responses'] }
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
