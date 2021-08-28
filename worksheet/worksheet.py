@@ -32,6 +32,7 @@ class WorksheetBlock(XBlock):
         The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
+        print('student_view', self, context)
         log.info('WorksheetBlock.studentView')
         html = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
         frag = Fragment(html.format(self=self))
