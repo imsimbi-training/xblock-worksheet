@@ -4,7 +4,7 @@ import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope
-from logging import log;
+import logging;
 
 class WorksheetBlock(XBlock):
     """
