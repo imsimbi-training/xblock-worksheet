@@ -87,10 +87,10 @@ function WorksheetBlock(runtime, element) {
     var tdDeleteButton = $('<button class="delete"><i class="fa fa-2x fa-trash-o"></i></button>');
     tdAddButton.click(addRepeatingSection);
     tdDeleteButton.click(deleteRepeatingSection);
-    $('#repeat-buttons', element).append(tdAddButton, tdDeleteButton);
+    $('#buttons', element).append(tdAddButton, tdDeleteButton);
     var submitButton = $('<button class="submit">Submit</button>');
     submitButton.click(submit);
-    $(element).append(submitButton);
+    $('#worksheet', element).append(submitButton);
     $(function ($) {
         /* Here's where you'd do things on page load. */
     });

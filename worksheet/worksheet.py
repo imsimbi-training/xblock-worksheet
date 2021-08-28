@@ -34,7 +34,7 @@ class WorksheetBlock(XBlock):
         """
         log.info('WorksheetBlock.studentView')
         print('WorksheetBlock.studentView')
-        html = self.resource_string("static/html/worksheet.html")
+        html = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
