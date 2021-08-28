@@ -134,7 +134,7 @@ body {
     background-color: #0b4983;
   }
 
-  button {
+  #worksheet button {
     display: inline-block;
   
     padding: 0.3em 1.2em;
@@ -152,7 +152,7 @@ body {
     margin: 10px;
   }
   
-  #repeat-buttons button:hover{
+  #worksheet button:hover{
     border-color: rgba(196,196,196,1);
   }
   
