@@ -3,7 +3,7 @@
 import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
-from xblock.fields import Integer, Scope
+from xblock.fields import Dict, Scope
 
 
 class WorksheetBlock(XBlock):
@@ -15,9 +15,9 @@ class WorksheetBlock(XBlock):
     # self.<fieldname>.
 
     # TO-DO: delete count, and define your own fields.
-    count = Integer(
-        default=0, scope=Scope.user_state,
-        help="A simple counter, to show something happening",
+    responses = Dict(
+        default={}, scope=Scope.user_state,
+        help="A map of the user responses on the worksheet",
     )
 
     def resource_string(self, path):
@@ -38,18 +38,21 @@ class WorksheetBlock(XBlock):
         frag.initialize_js('WorksheetBlock')
         return frag
 
-    # TO-DO: change this handler to perform your own actions.  You may need more
-    # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
-    def increment_count(self, data, suffix=''):
+    def vote(self, data, suffix=''):  # pylint: disable=unused-argument
         """
-        An example handler, which increments the data.
+        Update the vote count in response to a user action.
         """
-        # Just to show data coming in...
-        assert data['hello'] == 'world'
+        # Here is where we would prevent a student from voting twice, but then
+        # we couldn't click more than once in the demo!
+        #
+        #     if self.voted:
+        #         log.error("cheater!")
+        #         return
 
-        self.count += 1
-        return {"count": self.count}
+        self.responses = data.responsess
+
+        return {'responses': data.responses }
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

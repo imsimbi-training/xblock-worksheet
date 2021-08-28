@@ -44,6 +44,28 @@ function WorksheetBlock(runtime, element) {
         td.parent().append(td2);
     }
 
+    function submitSuccess(votes) {
+       
+    }
+
+    function submit() {
+        var handlerUrl = runtime.handlerUrl(element, 'submit');
+
+        var values = $('.input pre').text().toArray();
+        var names = $('.input pre').attr('namejquery conver').toArray();
+        var responses = {};
+        names.forEach((o, i) => responses[o] = values[i]);
+
+        $('.upvote', element).click(function() {
+            $.ajax({
+                type: "POST",
+                url: handlerUrl,
+                data: JSON.stringify({responses: responses}),
+                success: submitSuccess
+            });
+        });
+    }
+
     $('.repeat').addClass('repeat-original');
 
     $('.input', element)
@@ -65,6 +87,9 @@ function WorksheetBlock(runtime, element) {
     tdAddButton.click(addRepeatingSection);
     tdDeleteButton.click(deleteRepeatingSection);
     $('#repeat-buttons', element).append(tdAddButton, tdDeleteButton);
+    var submitButton = $('<button class="submit">Submit</button>');
+    submitButton.click(submit);
+    element.append(submitButton);
     $(function ($) {
         /* Here's where you'd do things on page load. */
     });

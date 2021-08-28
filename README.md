@@ -12,7 +12,7 @@ Follow the instructions to install and create it and then install this XBlock in
 the python virtual environment:
 
 ```sh
-pip install git+https://github.com/imsimbi-training/xblock-worksheet
+pip install --upgrade --force-reinstall  git+https://github.com/imsimbi-training/xblock-worksheet
 ```
 
 Run the workbench in `xblock-sdk`:
@@ -60,8 +60,6 @@ These buttons are added as children of the element with id `repeat-buttons`.
 
 The rest of the HTML is used for static layout of the worksheet and any valid html 
 can be used.
-
-
 
 
 ## State
