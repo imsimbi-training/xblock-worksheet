@@ -48,6 +48,10 @@ function WorksheetBlock(runtime, element) {
         console.logs('submitSuccess');
     }
 
+    function submitError(error) {
+        console.logs('submitError', error);
+    }
+
     function submit() {
         var handlerUrl = runtime.handlerUrl(element, 'submit');
 
@@ -63,7 +67,8 @@ function WorksheetBlock(runtime, element) {
                 type: "POST",
                 url: handlerUrl,
                 data: JSON.stringify({responses: responses}),
-                success: submitSuccess
+                success: submitSuccess,
+                error: submitError
             });
         });
     }
