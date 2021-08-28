@@ -4,7 +4,7 @@ import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope
-
+from logging import log;
 
 class WorksheetBlock(XBlock):
     """
@@ -44,6 +44,7 @@ class WorksheetBlock(XBlock):
         Update the worksheet responses
         """
 
+        log.info('responses %O', data.responses)
         print('responses: ' + data.responses)
 
         self.responses = data.responsess
