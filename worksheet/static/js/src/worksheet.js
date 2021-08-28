@@ -1,5 +1,6 @@
 /* Javascript for WorksheetBlock. */
 function WorksheetBlock(runtime, element) {  
+    console.log('runtime', runtime);
     function editField(event) {
         var pre = $('pre', event.target.parentElement);
         var inputContainer = pre.parent();
