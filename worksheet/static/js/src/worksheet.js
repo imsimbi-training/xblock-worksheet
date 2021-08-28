@@ -51,9 +51,9 @@ function WorksheetBlock(runtime, element) {
     function submit() {
         var handlerUrl = runtime.handlerUrl(element, 'submit');
 
-        var values = $('.input pre').text().toArray();
+        var values = $('.input pre').toArray().map((e) => $(e).text());
         console.logs('values', values);
-        var names = $('.input pre').attr('namejquery conver').toArray();
+        var names = $('.input').toArray().map((e) => $(e).attr('name'));
         console.logs('names', names);
         var responses = {};
         names.forEach((o, i) => responses[o] = values[i]);

@@ -134,7 +134,7 @@ body {
     background-color: #0b4983;
   }
 
-  #repeat-buttons button {
+  button {
     display: inline-block;
   
     padding: 0.3em 1.2em;
