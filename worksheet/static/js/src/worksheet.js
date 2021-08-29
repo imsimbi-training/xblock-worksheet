@@ -1,6 +1,6 @@
 /* Javascript for WorksheetBlock. */
 function WorksheetBlock(runtime, element) {  
-    console.log('runtime', runtime);
+    var addedRepeats = 0;
     function editField(event) {
         var pre = $('pre', event.target.parentElement);
         var inputContainer = pre.parent();
@@ -62,7 +62,7 @@ function WorksheetBlock(runtime, element) {
         $.ajax({
             type: "POST",
             url: handlerUrl,
-            data: JSON.stringify({responses: responses}),
+            data: JSON.stringify({responses: responses, addedRepeats: addedRepeats}),
             success: submitSuccess,
             error: submitError
         });

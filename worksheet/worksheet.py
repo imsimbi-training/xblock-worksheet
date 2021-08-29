@@ -3,7 +3,7 @@
 import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
-from xblock.fields import Dict, Scope, XMLString
+from xblock.fields import Dict, Scope, XMLString, Integer
 import logging;
 from lxml import etree, html
 from io import StringIO
@@ -21,6 +21,11 @@ class WorksheetBlock(XBlock):
     responses = Dict(
         default={}, scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
+    )
+
+    addedRepeats = Integer(
+        default=0, scope=Scope.user_state,
+        help="Number of clones of the repeating section that the student added",
     )
 
     content = XMLString(
@@ -74,9 +79,10 @@ class WorksheetBlock(XBlock):
         """
 
         log.info('data %O', data)
-        self.responses = data['responses']
+        self.responses = data.get('responses') or {}
+        self.addedRepeats = data.get('addedRepeats') or 0
 
-        return {'responses': data['responses'] }
+        return {'responses': self.responses, 'addedRepeats': self.addedRepeats }
 
 
     # parses the HTML content inside the <worksheet> tag
