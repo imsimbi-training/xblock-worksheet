@@ -26,6 +26,7 @@ function WorksheetBlock(runtime, element) {
     function addRepeatingSection(event) {
         var repeat = $('.repeat.repeat-original', element);
         var clone = repeat.clone(true);
+        var numClones = $('.repeat.repeat-clone', element).length;
         $('.input', clone).each((function() {
             var placeholder = $('textarea', this).attr('placeholder');
             $('textarea', this).val('');
@@ -36,7 +37,7 @@ function WorksheetBlock(runtime, element) {
         }))
         clone.addClass('repeat-clone');
         clone.removeClass('repeat-original');
-        var numClones = $('.repeat.repeat-clone', element).length;
+        
 
         // repeat.children[0].hidden = true;
         repeat.parent().append(clone);
