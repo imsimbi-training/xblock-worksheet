@@ -55,13 +55,15 @@ class WorksheetBlock(XBlock):
         if self.responses != None:
             tree = html.fragment_fromstring(html_ws)
             for count in range(self.addedRepeats):
-                repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]").first()
-                clone = deepcopy(repeat)
-                name = clone.get("name")+"["+(count+1)+"]"
-                clone.set("name", name)
-                clone.set("class", clone.get("class")+" repeat-clone")
-                repeat.getparent().append(clone)
-
+                try:
+                    repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
+                    clone = deepcopy(repeat)
+                    name = clone.get("name")+"["+(count+1)+"]"
+                    clone.set("name", name)
+                    clone.set("class", clone.get("class")+" repeat-clone")
+                    repeat.getparent().append(clone)
+                except:
+                    pass
 
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
             for e in inputs:
