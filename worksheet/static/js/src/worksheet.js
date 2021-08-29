@@ -30,11 +30,14 @@ function WorksheetBlock(runtime, element) {
             var placeholder = $('textarea', this).attr('placeholder');
             $('textarea', this).val('');
             $('pre', this).text(placeholder);
+            var name = $(this).attr('name');
+            name = name.concat('[',numClones+1,']');
+            $(this).attr('name', name);
         }))
         clone.addClass('repeat-clone');
         clone.removeClass('repeat-original');
         var numClones = $('.repeat.repeat-clone', element).length;
-        clone.attr('name', repeat.attr('name'.concat('[',numClones+1,']')))
+
         // repeat.children[0].hidden = true;
         repeat.parent().append(clone);
     }
