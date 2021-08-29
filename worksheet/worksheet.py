@@ -23,8 +23,8 @@ class WorksheetBlock(XBlock):
         help="A map of the user responses on the worksheet",
     )
 
-    html = XMLString(
-        default="<div></div>",
+    content = XMLString(
+        default="""<div class="input" name="cell1"></div>""",
         scope=Scope.content,
         help="HTML fragment for the worksheet structure",
     )
@@ -42,7 +42,7 @@ class WorksheetBlock(XBlock):
         """
         print(self.html)
         log.info('WorksheetBlock.studentView')
-        html_ws = '<div id="worksheet">' + self.html + '</div>'
+        html_ws = '<div id="worksheet">' + self.content + '</div>'
 
         tree   = html.fragment_fromstring(html_ws)
         inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
@@ -74,8 +74,40 @@ class WorksheetBlock(XBlock):
 
         return {'responses': data['responses'] }
 
-    # TO-DO: change this to create the scenarios you'd like to see in the
-    # workbench while developing your XBlock.
+
+    @classmethod
+    def parse_xml(cls, node, runtime, keys, id_generator):
+        """
+        Parse the XML for an HTML block.
+
+        The entire subtree under `node` is re-serialized, and set as the
+        content of the XBlock.
+
+        """
+        block = runtime.construct_xblock_from_class(cls, keys)
+
+        block.content = str(node.text or "")
+        for child in node:
+            block.content += etree.tostring(child, encoding='unicode')
+
+        return block
+
+    def add_xml_to_node(self, node):
+        """
+        Set attributes and children on `node` to represent ourselves as XML.
+
+        We parse our HTML content, and graft those nodes onto `node`.
+
+        """
+        xml = "<html_demo>" + self.content + "</html_demo>"
+        html_node = etree.fromstring(xml)
+
+        node.tag = html_node.tag
+        node.text = html_node.text
+        for child in html_node:
+            node.append(child)
+
+
     @staticmethod
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
