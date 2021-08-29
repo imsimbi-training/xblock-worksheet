@@ -40,7 +40,7 @@ class WorksheetBlock(XBlock):
         The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
-        print(self.html)
+        print(self.content)
         log.info('WorksheetBlock.studentView')
         html_ws = '<div id="worksheet">' + self.content + '</div>'
 
@@ -75,6 +75,7 @@ class WorksheetBlock(XBlock):
         return {'responses': data['responses'] }
 
 
+    # parses the HTML content inside the <worksheet> tag
     @classmethod
     def parse_xml(cls, node, runtime, keys, id_generator):
         """
