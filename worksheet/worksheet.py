@@ -6,6 +6,7 @@ from xblock.core import XBlock
 from xblock.fields import Dict, Scope, XMLString, Integer
 import logging;
 from lxml import etree, html
+from copy import deepcopy
 
 log = logging.getLogger(__name__)
 class WorksheetBlock(XBlock):
@@ -53,16 +54,13 @@ class WorksheetBlock(XBlock):
         # then we must add these to the HTML following the same algorithm used in the JS
         if self.responses != None:
             tree = html.fragment_fromstring(html_ws)
-            for x in range(self.addedRepeats):
-                repeats = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")
-                count = 0
-                for r in repeats:
-                    count += 1
-                    clone = r.deepcopy()
-                    name = clone.get("name")+"["+count+"]"
-                    clone.set("name", name)
-                    clone.set("class", clone.get("class")+" repeat-clone")
-                    r.getparent().append(clone)
+            for count in range(self.addedRepeats):
+                repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]").first()
+                clone = deepcopy(repeat)
+                name = clone.get("name")+"["+(count+1)+"]"
+                clone.set("name", name)
+                clone.set("class", clone.get("class")+" repeat-clone")
+                repeat.getparent().append(clone)
 
 
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
