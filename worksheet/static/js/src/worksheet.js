@@ -38,7 +38,7 @@ function WorksheetBlock(runtime, element) {
             $('pre', this).text(placeholder);
             var name = $(this).attr('name');
             name = name.concat('[',numClones+1,']');
-            $(this).attr('name', name);
+            $(this).attr('name', name).removeClass('value');
         }))
         clone.addClass('repeat-clone');
         clone.removeClass('repeat-original');
