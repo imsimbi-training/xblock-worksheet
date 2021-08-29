@@ -21,12 +21,16 @@ function WorksheetBlock(runtime, element) {
 
     }
     function deleteRepeatingSection(event) {
-        $('.repeat.repeat-clone', element).last().remove();
+        var clones = $('.repeat.repeat-clone', element);
+        if (clones.length > 0) {
+            clones.last().remove();
+            addedRepeats -= 1;
+        }
     }
     function addRepeatingSection(event) {
         var repeat = $('.repeat.repeat-original', element);
-        var clone = repeat.clone(true);
         var numClones = $('.repeat.repeat-clone', element).length;
+        var clone = repeat.clone(true);
         $('.input', clone).each((function() {
             var placeholder = $('textarea', this).attr('placeholder');
             $('textarea', this).val('');
@@ -37,7 +41,7 @@ function WorksheetBlock(runtime, element) {
         }))
         clone.addClass('repeat-clone');
         clone.removeClass('repeat-original');
-        
+        addedRepeats += 1;
 
         // repeat.children[0].hidden = true;
         repeat.parent().append(clone);
