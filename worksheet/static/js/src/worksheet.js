@@ -27,6 +27,7 @@ function WorksheetBlock(runtime, element) {
             addedRepeats -= 1;
         }
     }
+
     function addRepeatingSection(event) {
         var repeat = $('.repeat.repeat-original', element);
         var numClones = $('.repeat.repeat-clone', element).length;
@@ -72,7 +73,7 @@ function WorksheetBlock(runtime, element) {
         });
     }
 
-    $('.repeat').addClass('repeat-original');
+    $('.repeat').not('.repeat-clone').addClass('repeat-original');
 
     $('.input', element)
     .click(editField)
