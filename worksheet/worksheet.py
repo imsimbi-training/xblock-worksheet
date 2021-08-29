@@ -52,7 +52,6 @@ class WorksheetBlock(XBlock):
         # FIXME if added repeating fields are included in the responses
         # then we must add these to the HTML following the same algorithm used in the JS
         if self.responses != None:
-            if self.addedRepeats
             tree   = html.fragment_fromstring(html_ws)
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
             for e in inputs:
