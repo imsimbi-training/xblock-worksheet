@@ -49,7 +49,7 @@ class WorksheetBlock(XBlock):
             tree   = html.fragment_fromstring(html_ws)
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
             for e in inputs:
-                v = self.responses[e.get("name")]
+                v = self.responses.get(e.get("name"))
                 if v != None:
                     e.text = v
                     if "value" not in (" " + e.get("class") + " "):
