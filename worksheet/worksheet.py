@@ -5,6 +5,8 @@ from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope
 import logging;
+from lxml import etree
+from io import StringIO
 
 log = logging.getLogger(__name__)
 class WorksheetBlock(XBlock):
@@ -32,13 +34,26 @@ class WorksheetBlock(XBlock):
         The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
-        print('student_view', self, context)
+
         log.info('WorksheetBlock.studentView')
         html = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
-        frag = Fragment(html.format(self=self))
+
+        parser = etree.HTMLParser()
+        tree   = etree.parse(StringIO(html), parser)
+        inputs = tree.xpath("//div[contains(concat(' ', @class, ' '), ' Test ')]")
+        for e in inputs:
+            v = self.responses[e.get("name")]
+            if v != None:
+                e.text = v
+                if "value" not in (" " + e.get("class") + " "):
+                    e.set("class", e.get("class")+" value")
+        htmlWithResponses = etree.tostring(tree)
+
+        frag = Fragment(htmlWithResponses.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
         frag.initialize_js('WorksheetBlock')
+
         return frag
 
     @XBlock.json_handler
