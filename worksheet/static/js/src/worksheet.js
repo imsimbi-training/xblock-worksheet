@@ -24,17 +24,19 @@ function WorksheetBlock(runtime, element) {
         $('.repeat.repeat-clone', element).last().remove();
     }
     function addRepeatingSection(event) {
-        var td = $('.repeat.repeat-original', element);
-        var td2 = td.clone(true);
-        $('.input', td2).each((function() {
+        var repeat = $('.repeat.repeat-original', element);
+        var clone = repeat.clone(true);
+        $('.input', clone).each((function() {
             var placeholder = $('textarea', this).attr('placeholder');
             $('textarea', this).val('');
             $('pre', this).text(placeholder);
         }))
-        td2.addClass('repeat-clone');
-        td2.removeClass('repeat-original');
-        // td.children[0].hidden = true;
-        td.parent().append(td2);
+        clone.addClass('repeat-clone');
+        clone.removeClass('repeat-original');
+        var numClones = $('.repeat.repeat-clone', element).length;
+        clone.attr('name', repeat.attr('name'.concat('[',numClones+1,']')))
+        // repeat.children[0].hidden = true;
+        repeat.parent().append(clone);
     }
 
     function submitSuccess(votes) {
