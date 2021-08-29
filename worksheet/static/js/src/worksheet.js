@@ -83,11 +83,14 @@ function WorksheetBlock(runtime, element) {
     })
     // remove the inner text node
     .contents().filter(function () {return this.nodeType === 3;}).remove();
-    var tdAddButton = $('<button class="add"><i class="fa fa-2x fa-plus"></i></button>')
-    var tdDeleteButton = $('<button class="delete"><i class="fa fa-2x fa-trash-o"></i></button>');
-    tdAddButton.click(addRepeatingSection);
-    tdDeleteButton.click(deleteRepeatingSection);
-    $('#buttons', element).append(tdAddButton, tdDeleteButton);
+    var numRepeats = $('.repeat').length;
+    if (numRepeats > 0) {
+        var tdAddButton = $('<button class="add"><i class="fa fa-2x fa-plus"></i></button>')
+        var tdDeleteButton = $('<button class="delete"><i class="fa fa-2x fa-trash-o"></i></button>');
+        tdAddButton.click(addRepeatingSection);
+        tdDeleteButton.click(deleteRepeatingSection);
+        $('#buttons', element).append(tdAddButton, tdDeleteButton);
+    }
     var submitButton = $('<button class="submit">Submit</button>');
     submitButton.click(submit);
     $('#worksheet', element).append(submitButton);
