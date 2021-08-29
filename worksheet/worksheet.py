@@ -39,7 +39,7 @@ class WorksheetBlock(XBlock):
         html_ws = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
 
         tree   = html.fragment_fromstring(html_ws)
-        inputs = tree.xpath("//div[contains(concat(' ', @class, ' '), ' Test ')]")
+        inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
         for e in inputs:
             v = self.responses[e.get("name")]
             if v != None:
