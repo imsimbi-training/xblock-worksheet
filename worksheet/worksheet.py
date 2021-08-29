@@ -5,7 +5,7 @@ from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope
 import logging;
-from lxml import etree
+from lxml import etree, html
 from io import StringIO
 
 log = logging.getLogger(__name__)
@@ -36,10 +36,9 @@ class WorksheetBlock(XBlock):
         """
 
         log.info('WorksheetBlock.studentView')
-        html = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
+        html_ws = '<div id="worksheet">' + self.resource_string("static/html/worksheet.html") + '</div>'
 
-        parser = etree.HTMLParser()
-        tree   = etree.parse(StringIO(html), parser)
+        tree   = html.fragment_fromstring(html_ws)
         inputs = tree.xpath("//div[contains(concat(' ', @class, ' '), ' Test ')]")
         for e in inputs:
             v = self.responses[e.get("name")]
