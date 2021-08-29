@@ -34,24 +34,26 @@ class WorksheetBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
-    # TO-DO: change this view to display your data your own way.
+    # Displays the worksheet
     def student_view(self, context=None):
         """
         The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
-        print(self.content)
+       
         log.info('WorksheetBlock.studentView')
         html_ws = '<div id="worksheet">' + self.content + '</div>'
 
-        tree   = html.fragment_fromstring(html_ws)
-        inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
-        for e in inputs:
-            v = self.responses[e.get("name")]
-            if v != None:
-                e.text = v
-                if "value" not in (" " + e.get("class") + " "):
-                    e.set("class", e.get("class")+" value")
+        # add the values from state into the worksheet
+        if self.responses != None:
+            tree   = html.fragment_fromstring(html_ws)
+            inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
+            for e in inputs:
+                v = self.responses[e.get("name")]
+                if v != None:
+                    e.text = v
+                    if "value" not in (" " + e.get("class") + " "):
+                        e.set("class", e.get("class")+" value")
         # we use c14n (canonical) to prevent <div></div> being collapsed to <div/>
         # because it causes strange behaviour in the XBlock
         htmlWithResponses = etree.tostring(tree, method="c14n", pretty_print=True).decode("utf-8")
