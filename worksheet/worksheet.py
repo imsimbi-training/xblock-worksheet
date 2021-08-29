@@ -58,8 +58,10 @@ class WorksheetBlock(XBlock):
                 # try:
                     repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
                     clone = deepcopy(repeat)
-                    name = clone.get("name")+"["+(count+1)+"]"
-                    clone.set("name", name)
+                    inputs = clone.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
+                    for input in inputs:                            
+                        name = input.get("name")+"["+(count+1)+"]"
+                        input.set("name", name)
                     clone.set("class", clone.get("class")+" repeat-clone")
                     repeat.getparent().append(clone)
                 # except Exception as ex:
