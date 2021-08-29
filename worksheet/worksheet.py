@@ -62,7 +62,8 @@ class WorksheetBlock(XBlock):
                     clone.set("name", name)
                     clone.set("class", clone.get("class")+" repeat-clone")
                     repeat.getparent().append(clone)
-                except:
+                except Exception as ex:
+                    print(ex)
                     pass
 
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
