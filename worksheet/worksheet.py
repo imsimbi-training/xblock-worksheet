@@ -60,7 +60,7 @@ class WorksheetBlock(XBlock):
                     clone = deepcopy(repeat)
                     inputs = clone.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
                     for input in inputs:                            
-                        name = input.get("name")+"["+(count+1)+"]"
+                        name = input.get("name")+"["+str(count+1)+"]"
                         input.set("name", name)
                     clone.set("class", clone.get("class")+" repeat-clone")
                     repeat.getparent().append(clone)
