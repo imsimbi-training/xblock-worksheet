@@ -45,6 +45,8 @@ class WorksheetBlock(XBlock):
         html_ws = '<div id="worksheet">' + self.content + '</div>'
 
         # add the values from state into the worksheet
+        # FIXME if added repeating fields are included in the responses
+        # then we must add these to the HTML following the same algorithm used in the JS
         if self.responses != None:
             tree   = html.fragment_fromstring(html_ws)
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
