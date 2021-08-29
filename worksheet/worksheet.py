@@ -46,7 +46,9 @@ class WorksheetBlock(XBlock):
                 e.text = v
                 if "value" not in (" " + e.get("class") + " "):
                     e.set("class", e.get("class")+" value")
-        htmlWithResponses = etree.tostring(tree, pretty_print=True).decode("utf-8")
+        # we use c14n (canonical) to prevent <div></div> being collapsed to <div/>
+        # because it causes strange behaviour in the XBlock
+        htmlWithResponses = etree.tostring(tree, method="c14n", pretty_print=True).decode("utf-8")
         print(htmlWithResponses)
 
         frag = Fragment(htmlWithResponses.format(self=self))
