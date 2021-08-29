@@ -144,7 +144,6 @@ body {
     box-sizing: border-box;
     text-decoration: none;
     font-family: 'Roboto',sans-serif;
-    font-weight: 300;
     color: #FFFFFF;
     /* text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35); */
     text-align: center;
@@ -157,7 +156,7 @@ body {
   }
   
   #buttons button:active{
-    background-color: #f5af23;
+    background-color: #e4a01a;
   }
   
   

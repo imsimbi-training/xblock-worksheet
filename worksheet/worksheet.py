@@ -6,7 +6,6 @@ from xblock.core import XBlock
 from xblock.fields import Dict, Scope, XMLString, Integer
 import logging;
 from lxml import etree, html
-from io import StringIO
 
 log = logging.getLogger(__name__)
 class WorksheetBlock(XBlock):
@@ -53,6 +52,7 @@ class WorksheetBlock(XBlock):
         # FIXME if added repeating fields are included in the responses
         # then we must add these to the HTML following the same algorithm used in the JS
         if self.responses != None:
+            if self.addedRepeats
             tree   = html.fragment_fromstring(html_ws)
             inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
             for e in inputs:
@@ -81,8 +81,9 @@ class WorksheetBlock(XBlock):
         log.info('data %O', data)
         self.responses = data.get('responses') or {}
         self.addedRepeats = data.get('addedRepeats') or 0
-
-        return {'responses': self.responses, 'addedRepeats': self.addedRepeats }
+        state = {'responses': self.responses, 'addedRepeats': self.addedRepeats }
+        print(state)
+        return state
 
 
     # parses the HTML content inside the <worksheet> tag
