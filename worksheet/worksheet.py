@@ -47,7 +47,8 @@ class WorksheetBlock(XBlock):
                 e.text = v
                 if "value" not in (" " + e.get("class") + " "):
                     e.set("class", e.get("class")+" value")
-        htmlWithResponses = etree.tostring(tree).decode("utf-8")
+        htmlWithResponses = etree.tostring(tree, pretty_print=True).decode("utf-8")
+        print(htmlWithResponses)
 
         frag = Fragment(htmlWithResponses.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
