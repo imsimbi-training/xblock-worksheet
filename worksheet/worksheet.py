@@ -11,7 +11,9 @@ from copy import deepcopy
 log = logging.getLogger(__name__)
 class WorksheetBlock(XBlock):
     """
-    TO-DO: document what your XBlock does.
+    An HTML worksheet with sections to be filled in by a student.
+    Typically it could be in the structure of a table or other graphical structure
+    of organising information
     """
 
     editable_fields = [
