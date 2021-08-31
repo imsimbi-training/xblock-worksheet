@@ -46,7 +46,7 @@ class WorksheetBlock(XBlock):
         when viewing courses.
         """
        
-        log.info('WorksheetBlock.student_view')
+        log.info('WorksheetBlock.student_view %s %s', self, context)
         if not self.content:
             html_output = '<div>Empty worksheet</div>'
         else:
@@ -58,7 +58,7 @@ class WorksheetBlock(XBlock):
                     # then we must add these to the HTML following the same algorithm used in the JS
                     tree = html.fragment_fromstring(html_ws)
                     for count in range(self.addedRepeats):
-                        # try:
+                        try:
                             repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
                             clone = deepcopy(repeat)
                             inputs = clone.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
@@ -67,9 +67,9 @@ class WorksheetBlock(XBlock):
                                 input.set("name", name)
                             clone.set("class", clone.get("class")+" repeat-clone")
                             repeat.getparent().append(clone)
-                        # except Exception as ex:
-                        #     print(ex)
-                        #     pass
+                        except Exception as ex:
+                            print(ex)
+                            pass
 
                     inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
                     for e in inputs:
@@ -81,10 +81,11 @@ class WorksheetBlock(XBlock):
                 # we use c14n (canonical) to prevent <div></div> being collapsed to <div/>
                 # because it causes strange behaviour in the XBlock
                 html_output = etree.tostring(tree, method="c14n", pretty_print=True).decode("utf-8")
-                
+
             except Exception:
                 log.error('WorksheetBlock.student_view error parsing and enriching html', exc_info=True)
                 html_output =  '<div>Invalid HTML</div>'
+        log.info('WorksheetBlock.student_view html_output %s', html_output)
         frag = Fragment(html_output.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
