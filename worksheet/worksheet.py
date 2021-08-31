@@ -3,7 +3,7 @@
 import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
-from xblock.fields import Dict, Scope, XMLString, Integer
+from xblock.fields import Dict, Scope, XMLString, Integer, String
 import logging;
 from lxml import etree, html
 from copy import deepcopy
@@ -17,7 +17,15 @@ class WorksheetBlock(XBlock):
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
 
-    # TO-DO: delete count, and define your own fields.
+    display_name = String(
+        display_name=_('Display Name'),
+        help=_(
+            'This is the title for this question type'
+        ),
+        default='Free-text Response',
+        scope=Scope.settings,
+    )
+
     responses = Dict(
         default={}, scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
@@ -94,6 +102,7 @@ class WorksheetBlock(XBlock):
         frag.initialize_js('WorksheetBlock')
         return frag
 
+
     @XBlock.json_handler
     def submit(self, data, suffix=''):  # pylint: disable=unused-argument
         """
@@ -140,6 +149,27 @@ class WorksheetBlock(XBlock):
         node.text = html_node.text
         for child in html_node:
             node.append(child)
+
+    def studio_view(self, context):
+        """
+        Create a fragment used to display the edit view in the Studio.
+        """
+        html_str = pkg_resources.resource_string(__name__, "static/html/worksheet_studio.html")
+        href = self.href or ''
+        frag = Fragment(html_str.format(href=href, maxwidth=self.maxwidth, maxheight=self.maxheight))
+
+        return frag
+
+    @XBlock.json_handler
+    def studio_submit(self, data, suffix=''):
+        """
+        Called when submitting the form in Studio.
+        """
+        self.href = data.get('href')
+        self.maxwidth = data.get('maxwidth')
+        self.maxheight = data.get('maxheight')
+
+        return {'result': 'success'}
 
 
     @staticmethod
