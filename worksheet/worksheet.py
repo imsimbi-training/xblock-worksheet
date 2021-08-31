@@ -14,6 +14,10 @@ class WorksheetBlock(XBlock):
     TO-DO: document what your XBlock does.
     """
 
+    editable_fields = [
+        'display_name',
+    ]
+
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
 
