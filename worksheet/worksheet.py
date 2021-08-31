@@ -28,11 +28,11 @@ class WorksheetBlock(XBlock):
         help="Number of clones of the repeating section that the student added",
     )
 
-    content = XMLString(
-        default="""<div class="input" name="cell1"></div>""",
-        scope=Scope.content,
-        help="HTML fragment for the worksheet structure",
-    )
+    # content = XMLString(
+    #     default="""<div class="input" name="cell1"></div>""",
+    #     scope=Scope.content,
+    #     help="HTML fragment for the worksheet structure",
+    # )
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -46,45 +46,47 @@ class WorksheetBlock(XBlock):
         when viewing courses.
         """
        
-        log.info('WorksheetBlock.student_view %s %s', self, context)
-        if not self.content:
-            html_output = '<div>Empty worksheet</div>'
-        else:
-            try:
-                html_ws = '<div id="worksheet">' + self.content + '</div>'
-                if self.responses != None:
-                    # add the values from state into the worksheet
-                    # FIXME if added repeating fields are included in the responses
-                    # then we must add these to the HTML following the same algorithm used in the JS
-                    tree = html.fragment_fromstring(html_ws)
-                    for count in range(self.addedRepeats):
-                        try:
-                            repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
-                            clone = deepcopy(repeat)
-                            inputs = clone.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
-                            for input in inputs:                            
-                                name = input.get("name")+"["+str(count+1)+"]"
-                                input.set("name", name)
-                            clone.set("class", clone.get("class")+" repeat-clone")
-                            repeat.getparent().append(clone)
-                        except Exception as ex:
-                            print(ex)
-                            pass
+        # # log.info('WorksheetBlock.student_view %s %s', self, context)
+        # # if not self.content:
+        # #     html_output = '<div>Empty worksheet</div>'
+        # else:
+        content = self.resource_string("static/html/worksheet.html")
+        try:
+            html_ws = '<div id="worksheet">' + content + '</div>'
+            tree = html.fragment_fromstring(html_ws)
+            if self.responses != None:
+                # add the values from state into the worksheet
+                # FIXME if added repeating fields are included in the responses
+                # then we must add these to the HTML following the same algorithm used in the JS
 
-                    inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
-                    for e in inputs:
-                        v = self.responses.get(e.get("name"))
-                        if v != None:
-                            e.text = v
-                            if "value" not in (" " + e.get("class") + " "):
-                                e.set("class", e.get("class")+" value")
-                # we use c14n (canonical) to prevent <div></div> being collapsed to <div/>
-                # because it causes strange behaviour in the XBlock
-                html_output = etree.tostring(tree, method="c14n", pretty_print=True).decode("utf-8")
+                for count in range(self.addedRepeats):
+                    try:
+                        repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
+                        clone = deepcopy(repeat)
+                        inputs = clone.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
+                        for input in inputs:                            
+                            name = input.get("name")+"["+str(count+1)+"]"
+                            input.set("name", name)
+                        clone.set("class", clone.get("class")+" repeat-clone")
+                        repeat.getparent().append(clone)
+                    except Exception as ex:
+                        print(ex)
+                        pass
 
-            except Exception:
-                log.error('WorksheetBlock.student_view error parsing and enriching html', exc_info=True)
-                html_output =  '<div>Invalid HTML</div>'
+                inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
+                for e in inputs:
+                    v = self.responses.get(e.get("name"))
+                    if v != None:
+                        e.text = v
+                        if "value" not in (" " + e.get("class") + " "):
+                            e.set("class", e.get("class")+" value")
+            # we use c14n (canonical) to prevent <div></div> being collapsed to <div/>
+            # because it causes strange behaviour in the XBlock
+            html_output = etree.tostring(tree, method="c14n", pretty_print=True).decode("utf-8")
+
+        except Exception:
+            log.error('WorksheetBlock.student_view error parsing and enriching html', exc_info=True)
+            html_output =  '<div>Invalid HTML</div>'
         log.info('WorksheetBlock.student_view html_output %s', html_output)
         frag = Fragment(html_output.format(self=self))
         frag.add_css(self.resource_string("static/css/worksheet.css"))
