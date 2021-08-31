@@ -18,11 +18,9 @@ class WorksheetBlock(XBlock):
     # self.<fieldname>.
 
     display_name = String(
-        display_name=_('Display Name'),
-        help=_(
-            'This is the title for this question type'
-        ),
-        default='Free-text Response',
+        display_name= 'Display Name',
+        help= 'This is the title for this question type',
+        default='Worksheet',
         scope=Scope.settings,
     )
 
