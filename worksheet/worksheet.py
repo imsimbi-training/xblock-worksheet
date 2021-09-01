@@ -154,26 +154,26 @@ class WorksheetBlock(XBlock):
         for child in html_node:
             node.append(child)
 
-    def studio_view(self, context):
-        """
-        Create a fragment used to display the edit view in the Studio.
-        """
-        html_str = pkg_resources.resource_string(__name__, "static/html/worksheet_studio.html")
-        href = self.href or ''
-        frag = Fragment(html_str.format(href=href, maxwidth=self.maxwidth, maxheight=self.maxheight))
+    # def studio_view(self, context):
+    #     """
+    #     Create a fragment used to display the edit view in the Studio.
+    #     """
+    #     html_str = pkg_resources.resource_string(__name__, "static/html/worksheet_studio.html")
+    #     href = self.href or ''
+    #     frag = Fragment(html_str.format(href=href, maxwidth=self.maxwidth, maxheight=self.maxheight))
 
-        return frag
+    #     return frag
 
-    @XBlock.json_handler
-    def studio_submit(self, data, suffix=''):
-        """
-        Called when submitting the form in Studio.
-        """
-        self.href = data.get('href')
-        self.maxwidth = data.get('maxwidth')
-        self.maxheight = data.get('maxheight')
+    # @XBlock.json_handler
+    # def studio_submit(self, data, suffix=''):
+    #     """
+    #     Called when submitting the form in Studio.
+    #     """
+    #     self.href = data.get('href')
+    #     self.maxwidth = data.get('maxwidth')
+    #     self.maxheight = data.get('maxheight')
 
-        return {'result': 'success'}
+    #     return {'result': 'success'}
 
 
     @staticmethod
