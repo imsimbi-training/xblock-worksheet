@@ -4,12 +4,13 @@ import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope, XMLString, Integer, String
+from xblockutils.studio_editable import StudioEditableXBlockMixin
 import logging;
 from lxml import etree, html
 from copy import deepcopy
 
 log = logging.getLogger(__name__)
-class WorksheetBlock(XBlock):
+class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     """
     An HTML worksheet with sections to be filled in by a student.
     Typically it could be in the structure of a table or other graphical structure
@@ -154,13 +155,13 @@ class WorksheetBlock(XBlock):
         for child in html_node:
             node.append(child)
 
-    def studio_view(self, context):
-        """
-        Create a fragment used to display the edit view in the Studio.
-        """
-        html_str = pkg_resources.resource_string(__name__, "static/html/worksheet_studio.html")
-        href = self.href or ''
-        frag = Fragment(html_str.format(href=href, maxwidth=self.maxwidth, maxheight=self.maxheight))
+    # def studio_view(self, context):
+    #     """
+    #     Create a fragment used to display the edit view in the Studio.
+    #     """
+    #     html_str = pkg_resources.resource_string(__name__, "static/html/worksheet_studio.html")
+    #     href = self.href or ''
+    #     frag = Fragment(html_str.format(href=href, maxwidth=self.maxwidth, maxheight=self.maxheight))
 
     #     return frag
 
