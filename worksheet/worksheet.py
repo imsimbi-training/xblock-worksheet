@@ -81,8 +81,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 self.resourceCache[url] = data
                 return data
             return None
-        except Exception as ex:
-            print(ex)
+        except:
             log.info('Error loading URL', exc_info=True)
             return None
 
@@ -187,7 +186,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 <worksheet
                     display_name="Test"
                     html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
-                    css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
+                    css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.css"
                 >
                 </worksheet>
                 """
