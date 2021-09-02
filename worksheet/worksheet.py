@@ -64,6 +64,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         # #     html_output = '<div>Empty worksheet</div>'
         # else:
         content = self.resource_string("static/html/worksheet.html")
+        print("student_view %s %s %s", self.studio_view, self.author_view)
         try:
             html_ws = '<div id="worksheet">' + content + '</div>'
             tree = html.fragment_fromstring(html_ws)
