@@ -81,7 +81,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 self.resourceCache[url] = data
                 return data
             return None
-        except:
+        except Exception as ex:
+            print(ex)
             log.info('Error loading URL', exc_info=True)
             return None
 
@@ -98,7 +99,6 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         # else:
         content = self.resource_from_url(self.html_url) or "<div><p>Empty worksheet</p></div>"
         css = self.resource_from_url(self.css_url) or ""
-        print("student_view %s %s %s", self.studio_view)
         try:
             html_ws = '<div id="worksheet">' + content + '</div>'
             tree = html.fragment_fromstring(html_ws)
