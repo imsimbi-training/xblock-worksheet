@@ -158,6 +158,11 @@ body {
   #buttons button:active{
     background-color: #e4a01a;
   }
+
+  #worksheet .input textarea {
+    min-height: 40px !important;
+    width: 100% !important;
+  }
   
   
   @media all and (max-width:30em) {
