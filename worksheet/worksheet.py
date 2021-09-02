@@ -5,7 +5,9 @@ from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope, XMLString, Integer, String
 from xblockutils.studio_editable import StudioEditableXBlockMixin
-import logging;
+import logging
+import requests
+
 from lxml import etree, html
 from copy import deepcopy
 
@@ -31,6 +33,20 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         scope=Scope.settings,
     )
 
+    html_url = String(
+        display_name= 'HTML URL',
+        help= 'This is the HTML that defines the worksheet structure',
+        default='',
+        scope=Scope.settings,
+    )
+
+    css_url = String(
+        display_name= 'CSS URL',
+        help= 'This is the CSS that styles the worksheet structure',
+        default='',
+        scope=Scope.settings,
+    )
+
     responses = Dict(
         default={}, scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
@@ -40,6 +56,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         default=0, scope=Scope.user_state,
         help="Number of clones of the repeating section that the student added",
     )
+
+    resourceCache = {}
 
     # content = XMLString(
     #     default="""<div class="input" name="cell1"></div>""",
@@ -122,40 +140,6 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         print(state)
         return state
 
-
-    # parses the HTML content inside the <worksheet> tag
-    @classmethod
-    def parse_xml(cls, node, runtime, keys, id_generator):
-        """
-        Parse the XML for an HTML block.
-
-        The entire subtree under `node` is re-serialized, and set as the
-        content of the XBlock.
-
-        """
-        block = runtime.construct_xblock_from_class(cls, keys)
-
-        block.content = str(node.text or "")
-        for child in node:
-            block.content += etree.tostring(child, encoding='unicode')
-
-        return block
-
-    def add_xml_to_node(self, node):
-        """
-        Set attributes and children on `node` to represent ourselves as XML.
-
-        We parse our HTML content, and graft those nodes onto `node`.
-
-        """
-        xml = "<html_demo>" + self.content + "</html_demo>"
-        html_node = etree.fromstring(xml)
-
-        node.tag = html_node.tag
-        node.text = html_node.text
-        for child in html_node:
-            node.append(child)
-
     # def studio_view(self, context):
     #     """
     #     Create a fragment used to display the edit view in the Studio.
@@ -183,28 +167,13 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         """A canned scenario for display in the workbench."""
         return [
             ("WorksheetBlock",
-             """
-<worksheet>
-<div>
-    <div class="xbt-table">
-            <div class="xbt-row">
-                <div class="xbt-cell header"></div>
-                <div class="xbt-cell header">Column 1</div>
-                <div class="xbt-cell header">Column 2</div>
-            </div>
-            <div class="xbt-row">
-                <div class="xbt-cell header">Row 1</div>
-                <div class="xbt-cell static">Example 1</div>
-                <div class="xbt-cell static">Example 2</div>
-            </div>
-            <div class="xbt-row repeat">
-                <div class="xbt-cell header">Row 2</div>
-                <div name="example1" class="xbt-cell input">Enter test 1 here</div>
-                <div name="example2" class="xbt-cell input">Enter test 2 here</div>
-            </div>
-    </div>
-    <div id="buttons"><p>You can add and delete rows to the worksheet</p></div>
-</div>
-</worksheet>
-             """),
+                """
+                <worksheet
+                    display_name="Test"
+                    html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
+                    css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
+                >
+                </worksheet>
+                """
+            ),
         ]
