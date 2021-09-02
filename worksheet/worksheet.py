@@ -70,6 +70,21 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+    def resource_from_url(self, url):
+        """Handy helper for getting resources from a URL."""
+        try:
+            if self.resourceCache.get(url):
+                return self.resourceCache.get(url)
+            response = requests.get(url)
+            if response.status_code == requests.codes.ok:   # pylint: disable=no-member
+                data = response.text.decode("utf8")
+                self.resourceCache[url] = data
+                return data
+            return None
+        except:
+            log.info('Error loading URL', exc_info=True)
+            return None
+
     # Displays the worksheet
     def student_view(self, context=None):
         """
@@ -81,7 +96,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         # # if not self.content:
         # #     html_output = '<div>Empty worksheet</div>'
         # else:
-        content = self.resource_string("static/html/worksheet.html")
+        content = self.resource_from_url(self.html_url) or "<div><p>Empty worksheet</p></div>"
+        css = self.resource_from_url(self.css_url) or ""
         print("student_view %s %s %s", self.studio_view)
         try:
             html_ws = '<div id="worksheet">' + content + '</div>'
@@ -121,7 +137,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
             html_output =  '<div>Invalid HTML</div>'
         log.info('WorksheetBlock.student_view html_output %s', html_output)
         frag = Fragment(html_output.format(self=self))
-        frag.add_css(self.resource_string("static/css/worksheet.css"))
+        frag.add_css(css)
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
         frag.initialize_js('WorksheetBlock')
         return frag
