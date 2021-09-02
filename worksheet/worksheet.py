@@ -77,7 +77,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 return self.resourceCache.get(url)
             response = requests.get(url)
             if response.status_code == requests.codes.ok:   # pylint: disable=no-member
-                data = response.text.decode("utf8")
+                data = response.text
                 self.resourceCache[url] = data
                 return data
             return None
