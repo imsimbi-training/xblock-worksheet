@@ -21,6 +21,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
 
     editable_fields = [
         'display_name',
+        'html_url',
+        'css_url',
     ]
 
     # Fields are defined on the class.  You can access them in your code as
