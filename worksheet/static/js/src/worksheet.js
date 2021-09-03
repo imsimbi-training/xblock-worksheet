@@ -5,6 +5,8 @@ function WorksheetBlock(runtime, element) {
         var pre = $('pre', event.target.parentElement);
         var inputContainer = pre.parent();
         var ta = $('textarea', inputContainer);
+        var w = pre.width();
+        ta.width(w);
         ta.show();
         pre.hide();
         ta.focus();
