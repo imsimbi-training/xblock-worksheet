@@ -8,16 +8,16 @@ function WorksheetBlock(runtime, element) {
         var w = pre.width();
         console.log('width', w);
         ta.width(w);
-        ta.show();
-        pre.hide();
+        ta.addClass('visible')
+        pre.removeCass('visible')
         ta.focus();
     }
     function saveField(event) {
         var ta = $('textarea', event.target.parentElement);
         var inputContainer = ta.parent();
         var pre = $('pre', inputContainer);
-        ta.hide();
-        pre.show();
+        ta.removeCass('visible')
+        pre.addClass('visible')
         var text = ta.val();
         pre.text(text || ta.attr('placeholder'));
         if (text) inputContainer.addClass('value'); else inputContainer.removeClass('value');

@@ -161,25 +161,25 @@ body {
 
   #worksheet .input textarea {
     min-height: 40px !important;
-    min-width: 240px !important;
+    /* min-width: 240px !important;
+    width:100% !important; */
   }
 
-  /* #worksheet .input.editing textarea {
-    visibility: visible;
+  #worksheet .input textarea.visible {
+    display: inline-block;
   }
 
-  #worksheet .input.editing pre {
-    visibility: hidden;
+  #worksheet .input pre.visible {
+    display: inline-block;
   }
 
-  #worksheet .input:not(.editing) textarea {
-    visibility: hidden;
+  #worksheet .input textarea:not(.visible) {
+    display: none;
   }
 
-  #worksheet .input:not(.editing) pre {
-    visibility: visible;
+  #worksheet .input pre:not(.visible) {
+    display: none;
   }
- */
 
 
   @media all and (max-width:30em) {
