@@ -163,8 +163,25 @@ body {
     min-height: 40px !important;
     width: 100% !important;
   }
-  
-  
+
+  /* #worksheet .input.editing textarea {
+    visibility: visible;
+  }
+
+  #worksheet .input.editing pre {
+    visibility: hidden;
+  }
+
+  #worksheet .input:not(.editing) textarea {
+    visibility: hidden;
+  }
+
+  #worksheet .input:not(.editing) pre {
+    visibility: visible;
+  }
+ */
+
+
   @media all and (max-width:30em) {
     #buttons button {
       display:block;
