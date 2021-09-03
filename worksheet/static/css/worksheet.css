@@ -149,6 +149,7 @@ body {
     text-align: center;
     transition: all 0.2s;
     margin: 10px;
+    background-image: none !important;
   }
   
   #worksheet button:hover{
@@ -160,9 +161,8 @@ body {
   }
 
   #worksheet .input textarea {
-    min-height: 40px !important;
-    /* min-width: 240px !important;
-    width:100% !important; */
+    min-height: 60px !important;
+    min-width: 240px !important;
   }
 
   #worksheet .input > textarea.visible {

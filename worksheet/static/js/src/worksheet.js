@@ -6,8 +6,10 @@ function WorksheetBlock(runtime, element) {
         var pre = $('pre', inputContainer);
         var ta = $('textarea', inputContainer);
         var w = pre.width();
+        var h = pre.height();
         console.log('width', w);
         ta.width(w);
+        ta.height(h);
         ta.addClass('visible')
         pre.removeClass('visible')
         ta.focus();
