@@ -165,19 +165,19 @@ body {
     width:100% !important; */
   }
 
-  #worksheet .input textarea.visible {
+  #worksheet .input > textarea.visible {
     display: inline-block;
   }
 
-  #worksheet .input pre.visible {
+  #worksheet .input > pre.visible {
     display: inline-block;
   }
 
-  #worksheet .input textarea:not(.visible) {
+  #worksheet .input > textarea:not(.visible) {
     display: none;
   }
 
-  #worksheet .input pre:not(.visible) {
+  #worksheet .input >  pre:not(.visible) {
     display: none;
   }
 
