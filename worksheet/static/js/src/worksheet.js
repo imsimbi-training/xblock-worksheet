@@ -2,21 +2,22 @@
 function WorksheetBlock(runtime, element) {  
     var addedRepeats = 0;
     function editField(event) {
-        var pre = $('pre', event.target.parentElement);
-        var inputContainer = pre.parent();
+        var inputContainer = $(event.target.parentElement);
+        var pre = $('pre', inputContainer);
         var ta = $('textarea', inputContainer);
         var w = pre.width();
         console.log('width', w);
         ta.width(w);
         ta.addClass('visible')
-        pre.removeCass('visible')
+        pre.removeClass('visible')
         ta.focus();
     }
     function saveField(event) {
-        var ta = $('textarea', event.target.parentElement);
-        var inputContainer = ta.parent();
+ 
+        var inputContainer = $(event.target.parentElement);
+        var ta = $('textarea', inputContainer);
         var pre = $('pre', inputContainer);
-        ta.removeCass('visible')
+        ta.removeClass('visible')
         pre.addClass('visible')
         var text = ta.val();
         pre.text(text || ta.attr('placeholder'));
