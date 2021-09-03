@@ -86,6 +86,7 @@ body {
   
   .xbt-cell.input pre {
     padding: 5px 10px;
+    vertical-align: top;
   }
   
   .xbt-cell.input.value {
@@ -163,6 +164,7 @@ body {
   #worksheet .input textarea {
     min-height: 60px !important;
     min-width: 240px !important;
+    vertical-align: top;
   }
 
   #worksheet .input > textarea.visible {

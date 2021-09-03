@@ -24,7 +24,7 @@ def package_data(pkg, roots):
 
 setup(
     name='worksheet-xblock',
-    version='1.0',
+    version='1.1',
     description='Worksheet XBlock defined by HTML/CSS with multiple free text responses',
     license='Apache 2.0',
     packages=[
