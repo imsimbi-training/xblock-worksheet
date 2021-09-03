@@ -8,8 +8,8 @@ function WorksheetBlock(runtime, element) {
         var w = pre.width();
         var h = pre.height();
         console.log('width', w);
-        ta.width(w);
-        ta.height(h);
+        ta.width(w+20);
+        ta.height(h+20);
         ta.addClass('visible')
         pre.removeClass('visible')
         ta.focus();
