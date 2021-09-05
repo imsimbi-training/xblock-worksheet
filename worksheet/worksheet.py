@@ -144,11 +144,21 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
-            ("WorksheetBlock",
+            ("WorksheetBlock1",
                 """
                 <worksheet
                     display_name="Test"
                     html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
+                    css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.css"
+                >
+                </worksheet>
+                """
+            ),
+             ("WorksheetBlock2",
+                """
+                <worksheet
+                    display_name="Test"
+                    html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet-activities.html"
                     css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.css"
                 >
                 </worksheet>
