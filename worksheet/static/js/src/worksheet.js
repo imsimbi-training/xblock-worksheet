@@ -84,14 +84,16 @@ function WorksheetBlock(runtime, element) {
     $('.input', element)
     .click(editField)
     .append(function (i, e) {
-        $(this)
         var pre = $('<pre class="visible"></pre>');
         pre.text(e);
         return pre;
     })
     .append(function (i, e) {
         var inner = $(this).contents().filter(function () {return this.nodeType === 3;}).text();
-        return $('<textarea></textarea>').blur(saveField).attr('placeholder', inner).val(inner);
+        var value = $(this).hasClass('value');
+        let ta = $('<textarea></textarea>').blur(saveField).attr('placeholder', inner);
+        if (value) ta = ta.val(inner);
+        return ta;
     })
     // remove the inner text node
     .contents().filter(function () {return this.nodeType === 3;}).remove();
