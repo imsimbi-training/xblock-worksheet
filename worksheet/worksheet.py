@@ -46,7 +46,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         scope=Scope.settings,
     )
 
-    responses = Dict(
+    student_answer = Dict(
         default={}, scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
     )
@@ -90,7 +90,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         try:
             html_ws = '<div id="worksheet">' + content + '</div>'
             tree = html.fragment_fromstring(html_ws)
-            if self.responses != None:
+            if self.student_answer != None:
                 for count in range(self.addedRepeats):
                     try:
                         repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
@@ -107,7 +107,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
 
                 inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
                 for e in inputs:
-                    v = self.responses.get(e.get("name"))
+                    v = self.student_answer.get(e.get("name"))
                     if v != None:
                         e.text = v
                         if "value" not in (" " + e.get("class") + " "):
@@ -134,9 +134,9 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         """
 
         log.info('data %O', data)
-        self.responses = data.get('responses') or {}
+        self.student_answer = data.get('student_answer') or {}
         self.addedRepeats = data.get('addedRepeats') or 0
-        state = { 'student_answer': {'responses': self.responses, 'addedRepeats': self.addedRepeats } }
+        state = {'student_answer': self.student_answer, 'addedRepeats': self.addedRepeats }
         print(state)
         return state
 

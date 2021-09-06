@@ -24,7 +24,6 @@ function WorksheetBlock(runtime, element) {
         var text = ta.val();
         pre.text(text || ta.attr('placeholder'));
         if (text) inputContainer.addClass('value'); else inputContainer.removeClass('value');
-
     }
     function deleteRepeatingSection(event) {
         var clones = $('.repeat.repeat-clone', element);
@@ -73,7 +72,7 @@ function WorksheetBlock(runtime, element) {
         $.ajax({
             type: "POST",
             url: handlerUrl,
-            data: JSON.stringify({responses: responses, addedRepeats: addedRepeats}),
+            data: JSON.stringify({student_answer: responses, addedRepeats: addedRepeats}),
             success: submitSuccess,
             error: submitError
         });
