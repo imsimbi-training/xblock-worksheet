@@ -136,7 +136,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         log.info('data %O', data)
         self.responses = data.get('responses') or {}
         self.addedRepeats = data.get('addedRepeats') or 0
-        state = {'responses': self.responses, 'addedRepeats': self.addedRepeats }
+        state = { 'student_answer': {'responses': self.responses, 'addedRepeats': self.addedRepeats } }
         print(state)
         return state
 

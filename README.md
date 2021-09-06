@@ -3,6 +3,7 @@
 An OpenEdX XBlock that allows students to respond to multiple sections (using free text)
 on an HTML/CSS structured worksheet
 that may be in the form of a table or any other layout.
+##
 
 
 ## Development
@@ -86,12 +87,12 @@ The above worksheet template will be enriched:
                 <div class="xbt-row repeat">
                     <div class="xbt-cell header">Row 2</div>
                     <div name="example1" class="xbt-cell input">
-                        <pre>Enter test 1 here</pre>
-                        <textarea placeholder="Enter test 1 here" hidden></textarea>
+                        <pre class="visible">Enter test 1 here</pre>
+                        <textarea placeholder="Enter test 1 here"></textarea>
                     </div>
                     <div name="example2" class="xbt-cell input">
-                        <pre>Enter test 1 here</pre>
-                        <textarea placeholder="Enter test 1 here" hidden></textarea>
+                        <pre class="visible">Enter test 1 here</pre>
+                        <textarea placeholder="Enter test 1 here"></textarea>
                     </div>
                 </div>
         </div>
@@ -186,179 +187,4 @@ The names of added repeating sections will be `name[{i}]` where i is a zero base
 
 ## Sample CSS
 
-An example of CSS to style the above HTML is shown below. It renders the
-HTML in a table structure and also needs to style the buttons added
-as described above.
-
-
-```css
-/* table formatting */
-
-body {
-    font-family: Helvetica, Arial, Sans-Serif;
-  }
-  
-  .xblock-table {
-    width: 100%;
-    min-width: 600px;
-  }
-  
-  
-  .xblock-table .header {
-    background-color:rgb(255, 218, 153);
-    padding: 5px 10px;
-  }
-  
-  .xblock-table td.static {
-    background-color:rgb(218, 218, 218);
-    padding: 5px 10px;
-  }
-  
-  .xblock-table td.input {
-    background-color:rgb(241, 241, 241);
-    color:rgb(128, 128, 128);
-  }
-  
-  .xblock-table td.input pre {
-    padding: 5px 10px;
-  }
-  
-  .xblock-table td.input.value {
-    background-color:rgb(241, 241, 241);
-    color:rgb(32, 32, 32);
-  }
-  
-  .xblock-table td button {
-    border-radius: 50%;
-    border: 1px solid #444;
-    color: #222;
-    background: white;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-  }
-  
-  .xblock-table td button:active {
-    border-radius: 50%;
-    border: 1px solid #bbb;
-    color: #222;
-    background: #ddd;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-  }
-  
-  /* .xbt-table {
-    display: flex;
-    flex-direction: column;
-  } */
-  
-  .xbt-row {
-    display: table-row;
-    /* flex-direction: row; */
-  }
-  
-  .xbt-cell {
-    display: table-cell;
-  }
-  
-  
-  .xbt-cell.header {
-    background-color:rgb(255, 218, 153);
-    padding: 5px 10px;
-  }
-  
-  .xbt-cell.static {
-    background-color:rgb(218, 218, 218);
-    padding: 5px 10px;
-  }
-  
-  .xbt-cell.input {
-    background-color:rgb(241, 241, 241);
-    color:rgb(128, 128, 128);
-  }
-  
-  .xbt-cell.input pre {
-    padding: 5px 10px;
-  }
-  
-  .xbt-cell.input.value {
-    background-color:rgb(241, 241, 241);
-    color:rgb(32, 32, 32);
-  }
-  
-  .xbt-cell button {
-    border-radius: 50%;
-    border: 1px solid #444;
-    color: #222;
-    background: white;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-  }
-  
-  .xbt-cell button:active {
-    border-radius: 50%;
-    border: 1px solid #bbb;
-    color: #222;
-    background: #ddd;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-  }
-  .xbt-cell button:active {
-    border-radius: 50%;
-    border: 1px solid #bbb;
-    color: #222;
-    background: #ddd;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-  }
-  
-  #buttons button {
-    background-color: #f1bb4e;
-  }
-
-  button.submit {
-    background-color: #156bbb;
-  }
-
-  button.submit:active {
-    background-color: #0b4983;
-  }
-
-  #worksheet button {
-    display: inline-block;
-  
-    padding: 0.3em 1.2em;
-    margin:0 0.1em 0.1em 0;
-    border:0.16em solid rgba(255,255,255,0);
-    border-radius:2em;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-family: 'Roboto',sans-serif;
-    color: #FFFFFF;
-    /* text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35); */
-    text-align: center;
-    transition: all 0.2s;
-    margin: 10px;
-  }
-  
-  #worksheet button:hover{
-    border-color: rgba(196,196,196,1);
-  }
-  
-  #buttons button:active{
-    background-color: #e4a01a;
-  }
-  
-  
-  @media all and (max-width:30em) {
-    #buttons button {
-      display:block;
-      margin:0.2em auto;
-    }
-  } 
-  
-```
+An example of CSS to style the above HTML is given in the `static/css` directory.
