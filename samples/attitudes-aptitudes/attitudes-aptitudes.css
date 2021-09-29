@@ -1,0 +1,129 @@
+/* table formatting */
+
+body {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+  
+.xblock-table {
+  width: 100%;
+  min-width: 600px;
+}
+
+.xblock-table .header {
+  background-color:rgb(255, 218, 153);
+  padding: 5px 10px;
+}
+
+.xbt-table {
+  display: table;
+}
+
+.xbt-row {
+  display: table-row;
+  /* flex-direction: row; */
+}
+
+.xbt-cell {
+  display: table-cell;
+}
+
+.xbt-cell.header {
+  background-color:rgb(255, 218, 153);
+  padding: 5px 10px;
+}
+
+.xbt-cell.static {
+  background-color:rgb(218, 218, 218);
+  padding: 5px 10px;
+}
+
+.xbt-cell.input {
+  background-color:rgb(241, 241, 241);
+  color:rgb(192, 192, 192);
+  min-width: 150px;
+  min-height: 40px;
+}
+
+.xbt-cell.input pre {
+  padding: 5px 10px;
+  color:rgb(192, 192, 192);
+  background-color:rgb(241, 241, 241);
+}
+
+.xbt-cell.input.value pre {
+  background-color:rgb(241, 241, 241);
+  color:rgb(32, 32, 32);
+}
+
+.xbt-cell button {
+  border-radius: 50%;
+  border: 1px solid #444;
+  color: #222;
+  background: white;
+  width: 25px;
+  height: 25px;
+  font-size: 100%;
+}
+
+.xbt-cell button:active {
+  border-radius: 50%;
+  border: 1px solid #bbb;
+  color: #222;
+  background: #ddd;
+  width: 25px;
+  height: 25px;
+  font-size: 100%;
+}
+
+.xbt-cell button:active {
+  border-radius: 50%;
+  border: 1px solid #bbb;
+  color: #222;
+  background: #ddd;
+  width: 25px;
+  height: 25px;
+  font-size: 100%;
+}
+
+#worksheet {
+  all: initial;
+}
+
+#worksheet pre {
+  all: initial;
+}
+
+#worksheet div {
+  all: initial;
+}
+
+#worksheet textarea {
+  all: initial;
+}
+
+#worksheet .input textarea {
+  min-height: 60px !important;
+  min-width: 240px !important;
+  vertical-align: top;
+}
+
+#worksheet .input > textarea.visible {
+  display: inline-block;
+}
+
+#worksheet .input > pre.visible {
+  display: inline-block;
+}
+
+#worksheet .input > textarea:not(.visible) {
+  display: none;
+}
+
+#worksheet .input >  pre:not(.visible) {
+  display: none;
+}
+
+#worksheet .submit {
+  margin: 20px 0;
+}
+
