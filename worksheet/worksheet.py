@@ -23,6 +23,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         'display_name',
         'html_url',
         'css_url',
+        'disable_cache',
     ]
 
     display_name = String(
@@ -56,16 +57,14 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         help="Number of clones of the repeating section that the student added",
     )
 
-    disableCache = String(
+    disable_cache = String(
         display_name= 'Disable Cache',
         help= 'Disable caching of the HTML and CSS files (for testing updates to these files)',
         default=False,
         scope=Scope.settings,
     )
-    
+
     resourceCache = {}
-
-
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -75,7 +74,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     def resource_from_url(self, url):
         """Handy helper for getting resources from a URL."""
         try:
-            if not self.disableCache and self.resourceCache.get(url):
+            if not self.disable_cache and self.resourceCache.get(url):
                 return self.resourceCache.get(url)
             response = requests.get(url)
             if response.status_code == requests.codes.ok:   # pylint: disable=no-member
