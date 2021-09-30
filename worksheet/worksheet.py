@@ -77,9 +77,11 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
             if not self.disable_cache and self.resourceCache.get(url):
                 return self.resourceCache.get(url)
             response = requests.get(url)
+            log.info('resource_from_url request %s %i', url, response.status_code);
             if response.status_code == requests.codes.ok:   # pylint: disable=no-member
                 data = response.text
                 self.resourceCache[url] = data
+                log.info('resource_from_url response %s', data);
                 return data
             return None
         except:
