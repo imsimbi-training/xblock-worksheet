@@ -3,7 +3,7 @@
 import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
-from xblock.fields import Dict, Scope, XMLString, Integer, String, Boolean
+from xblock.fields import Dict, Scope, Integer, String, Boolean
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 import logging
 import requests
@@ -57,7 +57,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         help="Number of clones of the repeating section that the student added",
     )
 
-    disable_cache = String(
+    disable_cache = Boolean(
         display_name= 'Disable Cache',
         help= 'Disable caching of the HTML and CSS files (for testing updates to these files)',
         default=False,
@@ -76,6 +76,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         try:
             if not self.disable_cache and self.resourceCache.get(url):
                 return self.resourceCache.get(url)
+            if self.disable_cache:
+                self.resourceCache.pop(url)
             response = requests.get(url)
             log.info('resource_from_url request %s %i', url, response.status_code);
             if response.status_code == requests.codes.ok:   # pylint: disable=no-member
