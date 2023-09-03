@@ -22,6 +22,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     editable_fields = [
         'display_name',
         'html_url',
+        'html_content',
         'css_url',
         'disable_cache',
     ]
@@ -35,9 +36,17 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
 
     html_url = String(
         display_name= 'HTML URL',
-        help= 'This is the HTML that defines the worksheet structure',
+        help= 'This is the HTML that defines the worksheet structure. HTML URL or HTML Content must be specified',
         default='',
         scope=Scope.settings,
+    )
+
+    html_content = String(
+        display_name= 'HTML Content',
+        help= 'This is the HTML that defines the worksheet structure. HTML URL or HTML Content must be specified',
+        default='',
+        scope=Scope.settings,
+        multiline_editor=True,
     )
 
     css_url = String(
@@ -97,7 +106,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         when viewing courses.
         """
 
-        content = self.resource_from_url(self.html_url) or "<div><p>Empty worksheet</p></div>"
+        
+        content = self.html_content if self.html_content else (self.resource_from_url(self.html_url) or "<div><p>Empty worksheet</p></div>")
         css = self.resource_from_url(self.css_url) or ""
         try:
             html_ws = '<div id="worksheet">' + content + '</div>'
@@ -136,6 +146,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         frag.add_css(css)
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
         frag.initialize_js('WorksheetBlock')
+        log.info('WorksheetBlock.student_view final fragment %s', frag)
         return frag
 
 
