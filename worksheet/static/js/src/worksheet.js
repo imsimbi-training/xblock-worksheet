@@ -1,6 +1,6 @@
 /* Javascript for WorksheetBlock. */
 function WorksheetBlock(runtime, element) {  
-    var addedRepeats = 0;
+    var added_repeats = 0;
     function editField(event) {
         var inputContainer = $(event.target.parentElement);
         var pre = $('pre', inputContainer);
@@ -29,7 +29,7 @@ function WorksheetBlock(runtime, element) {
         var clones = $('.repeat.repeat-clone', element);
         if (clones.length > 0) {
             clones.last().remove();
-            addedRepeats -= 1;
+            added_repeats -= 1;
         }
     }
 
@@ -47,7 +47,7 @@ function WorksheetBlock(runtime, element) {
         }))
         clone.addClass('repeat-clone');
         clone.removeClass('repeat-original');
-        addedRepeats += 1;
+        added_repeats += 1;
 
         // repeat.children[0].hidden = true;
         repeat.parent().append(clone);
@@ -72,7 +72,7 @@ function WorksheetBlock(runtime, element) {
         $.ajax({
             type: "POST",
             url: handlerUrl,
-            data: JSON.stringify({student_answer: responses, addedRepeats: addedRepeats}),
+            data: JSON.stringify({student_answer: responses, added_repeats: added_repeats}),
             success: submitSuccess,
             error: submitError
         });

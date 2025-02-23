@@ -1,12 +1,13 @@
 """A worksheet in structured using HTML/CSS that the student fills out with multiple free text responses."""
 
+import importlib
+import logging
+import requests
 import pkg_resources
 from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Dict, Scope, Integer, String, Boolean
-from xblockutils.studio_editable import StudioEditableXBlockMixin
-import logging
-import requests
+from xblock.utils.studio_editable import StudioEditableXBlockMixin
 
 from lxml import etree, html
 from copy import deepcopy
@@ -14,7 +15,7 @@ from copy import deepcopy
 log = logging.getLogger(__name__)
 class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     """
-    An HTML/CSS worksheet with sections to be filled in by a student.
+    An HTML worksheet with sections to be filled in by a student.
     Typically it could be in the structure of a table or other graphical structure
     of organising information
     """
@@ -23,7 +24,6 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         'display_name',
         'html_url',
         'html_content',
-        'css_url',
         'disable_cache',
     ]
 
@@ -49,19 +49,12 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         multiline_editor=True,
     )
 
-    css_url = String(
-        display_name= 'CSS URL',
-        help= 'This is the CSS that styles the worksheet structure',
-        default='',
-        scope=Scope.settings,
-    )
-
     student_answer = Dict(
         default={}, scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
     )
 
-    addedRepeats = Integer(
+    added_repeats = Integer(
         default=0, scope=Scope.user_state,
         help="Number of clones of the repeating section that the student added",
     )
@@ -108,12 +101,11 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
 
         
         content = self.html_content if self.html_content else (self.resource_from_url(self.html_url) or "<div><p>Empty worksheet</p></div>")
-        css = self.resource_from_url(self.css_url) or ""
         try:
             html_ws = '<div id="worksheet">' + content + '</div>'
             tree = html.fragment_fromstring(html_ws)
             if self.student_answer != None:
-                for count in range(self.addedRepeats):
+                for count in range(self.added_repeats):
                     try:
                         repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
                         clone = deepcopy(repeat)
@@ -143,7 +135,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
             html_output =  '<div>Invalid HTML</div>'
         log.info('WorksheetBlock.student_view html_output %s', html_output)
         frag = Fragment(html_output.format(self=self))
-        frag.add_css(css)
+        css_str = importlib.resources.files(__package__).joinpath("static/css/worksheet.css").read_text(encoding="utf-8")
+        frag.add_css(str(css_str))
         frag.add_javascript(self.resource_string("static/js/src/worksheet.js"))
         frag.initialize_js('WorksheetBlock')
         log.info('WorksheetBlock.student_view final fragment %s', frag)
@@ -156,10 +149,10 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         Update the worksheet responses
         """
 
-        log.info('data %O', data)
+        log.info('data %s', str(data))
         self.student_answer = data.get('student_answer') or {}
-        self.addedRepeats = data.get('addedRepeats') or 0
-        state = {'student_answer': self.student_answer, 'addedRepeats': self.addedRepeats }
+        self.added_repeats = data.get('added_repeats') or 0
+        state = {'student_answer': self.student_answer, 'added_repeats': self.added_repeats }
         print(state)
         return state
 
@@ -172,7 +165,6 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 <worksheet
                     display_name="Test"
                     html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
-                    css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.css"
                 >
                 </worksheet>
                 """
@@ -182,7 +174,6 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 <worksheet
                     display_name="Test"
                     html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet-activities.html"
-                    css_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.css"
                 >
                 </worksheet>
                 """

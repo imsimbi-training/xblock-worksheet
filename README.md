@@ -175,13 +175,13 @@ The state will be stored with this structure:
         "name1": "response1",
         "name2": "response2",
     },
-    "addedRepeats": 0,
+    "added_repeats": 0,
 }
 ```
 
 Where `name1` and `name2` are names of elements that have the `input` class in the HTML.
 
-`addedRepeats` records how many additional repeating sections were added by the student.
+`added_repeats` records how many additional repeating sections were added by the student.
 
 The names of added repeating sections will be `name[{i}]` where i is a zero based index.
 
