@@ -85,45 +85,45 @@ body {
   font-size: 100%;
 }
 
-#worksheet {
+.worksheet-root {
   all: initial;
 }
 
-#worksheet pre {
+.worksheet-root pre {
   all: initial;
 }
 
-#worksheet div {
+.worksheet-root div {
   all: initial;
 }
 
-#worksheet textarea {
+.worksheet-root textarea {
   all: initial;
 }
 
-#worksheet .input textarea {
+.worksheet-root .input textarea {
   min-height: 60px !important;
   min-width: 240px !important;
   vertical-align: top;
 }
 
-#worksheet .input > textarea.visible {
+.worksheet-root .input > textarea.visible {
   display: inline-block;
 }
 
-#worksheet .input > pre.visible {
+.worksheet-root .input > pre.visible {
   display: inline-block;
 }
 
-#worksheet .input > textarea:not(.visible) {
+.worksheet-root .input > textarea:not(.visible) {
   display: none;
 }
 
-#worksheet .input >  pre:not(.visible) {
+.worksheet-root .input >  pre:not(.visible) {
   display: none;
 }
 
-#worksheet .submit {
+.worksheet-root .submit {
   margin: 20px 0;
 }
 

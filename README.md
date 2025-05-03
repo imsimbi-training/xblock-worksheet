@@ -8,7 +8,7 @@ that may be in the form of a table or any other layout.
 
 ## Development
 
-We use the xblock workbench here: https://github.com/edx/xblock-sdk
+We use the xblock workbench here: https://github.com/openedx/xblock-sdk
 
 Follow the instructions to install and create it and then install this XBlock into 
 the python virtual environment:
@@ -16,6 +16,13 @@ the python virtual environment:
 ```sh
 pip install --upgrade --force-reinstall  git+https://github.com/imsimbi-training/xblock-worksheet
 ```
+
+or for local dev:
+
+```sh
+pip install --upgrade --force-reinstall  -e ../xblock-worksheet
+```
+
 
 Run the workbench in `xblock-sdk`:
 

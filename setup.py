@@ -23,12 +23,12 @@ def package_data(pkg, roots):
 
 
 setup(
-    name='worksheet-xblock',
+    name='xblock-worksheet',
     version='1.1',
     description='Worksheet XBlock defined by HTML/CSS with multiple free text responses',
     license='Apache 2.0',
     packages=[
-        'worksheet',
+        'worksheet'
     ],
     install_requires=[
         'XBlock',

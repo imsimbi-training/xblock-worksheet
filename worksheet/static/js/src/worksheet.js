@@ -1,13 +1,13 @@
 /* Javascript for WorksheetBlock. */
 function WorksheetBlock(runtime, element) {  
     var added_repeats = 0;
+    const instance_id = element.id;
     function editField(event) {
         var inputContainer = $(event.target.parentElement);
         var pre = $('pre', inputContainer);
         var ta = $('textarea', inputContainer);
         var w = pre.width();
         var h = pre.height();
-        console.log('width', w);
         ta.width(w+20);
         ta.height(h+20);
         ta.addClass('visible')
@@ -106,7 +106,7 @@ function WorksheetBlock(runtime, element) {
     }
     var submitButton = $('<button class="submit">Submit</button>');
     submitButton.click(submit);
-    $('#worksheet', element).append(submitButton);
+    $('.worksheet-root', element).append(submitButton);
     $(function ($) {
         /* Here's where you'd do things on page load. */
     });

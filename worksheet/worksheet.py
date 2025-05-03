@@ -79,8 +79,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
             if not self.disable_cache and self.resourceCache.get(url):
                 return self.resourceCache.get(url)
             if self.disable_cache:
-                self.resourceCache.pop(url)
-            response = requests.get(url)
+                self.resourceCache.pop(url, None)
+            response = requests.get(url, timeout=10)
             log.info('resource_from_url request %s %i', url, response.status_code);
             if response.status_code == requests.codes.ok:   # pylint: disable=no-member
                 data = response.text
@@ -98,26 +98,26 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         The primary view of the WorksheetBlock, shown to students
         when viewing courses.
         """
-
+        instance_id = str(self.scope_ids.usage_id)
         
         content = self.html_content if self.html_content else (self.resource_from_url(self.html_url) or "<div><p>Empty worksheet</p></div>")
         try:
-            html_ws = '<div id="worksheet">' + content + '</div>'
+            html_ws = f'<div id="worksheet-{instance_id}" class="worksheet-root">' + content + '</div>'
             tree = html.fragment_fromstring(html_ws)
-            if self.student_answer != None:
+            if self.student_answer is not None:
                 for count in range(self.added_repeats):
                     try:
-                        repeat = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
-                        clone = deepcopy(repeat)
+                        repeat_element = tree.xpath("//*[contains(concat(' ', @class, ' '), ' repeat ')]")[0]
+                        clone = deepcopy(repeat_element)
+                        repeat_element.getparent().append(clone)
                         inputs = clone.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
-                        for input in inputs:                            
-                            name = input.get("name")+"["+str(count+1)+"]"
-                            input.set("name", name)
+                        for input_element in inputs:                            
+                            name = input_element.get("name")+"["+str(count+1)+"]"
+                            input_element.set("name", name)
                         clone.set("class", clone.get("class")+" repeat-clone")
-                        repeat.getparent().append(clone)
+                        repeat_element.getparent().append(clone)
                     except Exception as ex:
-                        print(ex)
-                        pass
+                        log.info('repeat or input elements not found: %s', ex, exc_info=True)
 
                 inputs = tree.xpath("//*[contains(concat(' ', @class, ' '), ' input ')]")
                 for e in inputs:
@@ -153,7 +153,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         self.student_answer = data.get('student_answer') or {}
         self.added_repeats = data.get('added_repeats') or 0
         state = {'student_answer': self.student_answer, 'added_repeats': self.added_repeats }
-        print(state)
+        log.info('submit state %s', state)
         return state
 
     @staticmethod
