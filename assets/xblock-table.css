@@ -85,7 +85,8 @@ body {
 }
 
 .xbt-cell.input pre {
-  padding: 5px 10px;
+  padding: 1px 10px;
+  margin: 2px 0;
 }
 
 .xbt-cell.input.value {

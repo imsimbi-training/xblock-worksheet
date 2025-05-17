@@ -1,6 +1,6 @@
 /* Javascript for WorksheetBlock. */
 function WorksheetBlock(runtime, element) {  
-    var added_repeats = 0;
+    var added_repeats = $('.repeat-clone', element).length;
     const instance_id = element.id;
     function editField(event) {
         var inputContainer = $(event.target.parentElement);
@@ -78,34 +78,48 @@ function WorksheetBlock(runtime, element) {
         });
     }
 
-    $('.repeat').not('.repeat-clone').addClass('repeat-original');
-
     $('.input', element)
-    .click(editField)
     .append(function (i, e) {
-        var pre = $('<pre class="visible"></pre>');
+        // e is the inner text
+        var pre = $('<pre class="visible"></pre>').css({
+            width: '100%',
+            height: '100%',
+            // margin: 0,
+            // padding: '0.5em',
+            // 'box-sizing': 'border-box',
+            // overflow: 'auto'
+          });
         pre.text(e);
         return pre;
     })
     .append(function (i, e) {
         var inner = $(this).contents().filter(function () {return this.nodeType === 3;}).text();
         var value = $(this).hasClass('value');
-        let ta = $('<textarea></textarea>').blur(saveField).attr('placeholder', inner);
+        let ta = $('<textarea></textarea>').blur(saveField).attr('placeholder', inner).on('keydown', function(e) {
+            // For Mac: Command (metaKey), for Windows/Linux: Control (ctrlKey)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                $(this).blur();
+                // Optionally, prevent the default newline
+                e.preventDefault();
+            }
+        });
         if (value) ta = ta.val(inner);
         return ta;
     })
     // remove the inner text node
     .contents().filter(function () {return this.nodeType === 3;}).remove();
+    $('.input', element)
+    .on('click', editField);    
     var numRepeats = $('.repeat').length;
     if (numRepeats > 0) {
         var tdAddButton = $('<button class="add"><i class="fa fa-2x fa-plus"></i></button>')
         var tdDeleteButton = $('<button class="delete"><i class="fa fa-2x fa-trash-o"></i></button>');
-        tdAddButton.click(addRepeatingSection);
-        tdDeleteButton.click(deleteRepeatingSection);
+        tdAddButton.on('click', addRepeatingSection);
+        tdDeleteButton.on('click', deleteRepeatingSection);
         $('#buttons', element).append(tdAddButton, tdDeleteButton);
     }
     var submitButton = $('<button class="submit">Submit</button>');
-    submitButton.click(submit);
+    submitButton.on('click', submit);
     $('.worksheet-root', element).append(submitButton);
     $(function ($) {
         /* Here's where you'd do things on page load. */

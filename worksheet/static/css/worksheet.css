@@ -85,7 +85,8 @@ body {
   }
   
   .xbt-cell.input pre {
-    padding: 5px 10px;
+    padding: 10px 10px;
+    margin: 2px 0;
     vertical-align: top;
   }
   
@@ -126,13 +127,25 @@ body {
   #buttons button {
     background-color: #f1bb4e;
   }
+  #buttons button:hover{
+    /* border-color: rgba(196,196,196,1); */
+    background-color:rgb(226, 172, 62);
+  }
+
 
   button.submit {
     background-color: #156bbb;
   }
+  button.submit:hover {
+    background-color:rgb(33, 98, 160) !important;
+  }
+  button.submit:focus {
+    box-shadow: none;
+  }
+
 
   button.submit:active {
-    background-color: #0b4983;
+    background-color: rgb(33, 98, 160);
   }
 
   .worksheet-root button {
@@ -153,9 +166,6 @@ body {
     background-image: none !important;
   }
   
-  .worksheet-root button:hover{
-    border-color: rgba(196,196,196,1);
-  }
   
   #buttons button:active{
     background-color: #e4a01a;
