@@ -147,6 +147,9 @@ body {
   button.submit:active {
     background-color: rgb(33, 98, 160);
   }
+  button.submit:disabled {
+    background-color: rgb(116, 139, 160) !important;
+  }
 
   .worksheet-root button {
     display: inline-block;

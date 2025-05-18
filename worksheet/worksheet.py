@@ -26,6 +26,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         "display_name",
         "html_url",
         "html_content",
+        "initial_repeats",
         "disable_cache",
     ]
 
@@ -49,6 +50,13 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         default="",
         scope=Scope.settings,
         multiline_editor=True,
+    )
+
+    initial_repeats = Integer(
+        display_name="Initial Repeats",
+        help="This is the number of repeated sections that should be displayed initially",
+        default=0,
+        scope=Scope.settings,
     )
 
     student_answer = Dict(
@@ -103,6 +111,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         when viewing courses.
         """
         instance_id = str(self.scope_ids.usage_id)
+        repeats = max(self.initial_repeats or 0, self.added_repeats or 0)
 
         content = (
             self.html_content
@@ -130,7 +139,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
 
             if self.student_answer is not None:
                 if repeat_element is not None:
-                    for count in range(self.added_repeats):
+                    for count in range(repeats):
                         try:
                             clone = deepcopy(repeat_element)
                             repeat_element.getparent().append(clone)
@@ -207,14 +216,15 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
 
     @staticmethod
     def workbench_scenarios():
-        """A canned scenario for display in the workbench."""
+        """canned scenarios for display in the workbench."""
         return [
             (
                 "WorksheetBlock1",
                 """
                     <worksheet
-                        display_name="Test"
+                        display_name="Test 1"
                         html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet.html"
+                        initial_repeats="2"
                     >
                     </worksheet>
                     """,
@@ -223,8 +233,9 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                 "WorksheetBlock2",
                 """
                     <worksheet
-                        display_name="Test"
+                        display_name="Test 2"
                         html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet-activities.html"
+                        initial_repeats="2"
                     >
                     </worksheet>
                     """,

@@ -1,7 +1,20 @@
 /* Javascript for WorksheetBlock. */
 function WorksheetBlock(runtime, element) {  
     var added_repeats = $('.repeat-clone', element).length;
+    var dirty = false;
     const instance_id = element.id;
+    function setDirty(isDirty) {
+        dirty = isDirty;
+        $('.submit', element).prop('disabled', !dirty);
+    }
+    function beforeUnload(event) {
+        console.log('beforeUnload', dirty);
+        if (dirty) {
+            console.log('preventDefault');
+            event.preventDefault();
+            event.returnValue = '';
+        }
+    }
     function editField(event) {
         var inputContainer = $(event.target.parentElement);
         var pre = $('pre', inputContainer);
@@ -15,7 +28,6 @@ function WorksheetBlock(runtime, element) {
         ta.focus();
     }
     function saveField(event) {
- 
         var inputContainer = $(event.target.parentElement);
         var ta = $('textarea', inputContainer);
         var pre = $('pre', inputContainer);
@@ -24,6 +36,7 @@ function WorksheetBlock(runtime, element) {
         var text = ta.val();
         pre.text(text || ta.attr('placeholder'));
         if (text) inputContainer.addClass('value'); else inputContainer.removeClass('value');
+        setDirty(true);
     }
     function deleteRepeatingSection(event) {
         var clones = $('.repeat.repeat-clone', element);
@@ -55,6 +68,8 @@ function WorksheetBlock(runtime, element) {
 
     function submitSuccess(votes) {
         console.log('submitSuccess');
+        setDirty(false);
+        $('.input', element)
     }
 
     function submitError(xhtml, error, errorThrown) {
@@ -119,9 +134,10 @@ function WorksheetBlock(runtime, element) {
         $('#buttons', element).append(tdAddButton, tdDeleteButton);
     }
     var submitButton = $('<button class="submit">Submit</button>');
-    submitButton.on('click', submit);
+    submitButton.on('click', submit).prop('disabled', true);
     $('.worksheet-root', element).append(submitButton);
     $(function ($) {
         /* Here's where you'd do things on page load. */
     });
+    window.addEventListener('beforeunload', beforeUnload);
 }
