@@ -33,21 +33,21 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     display_name = String(
         display_name="Display Name",
         help="This is the title for this question type",
-        default="Worksheet",
+        default="Worksheet", #type: ignore
         scope=Scope.settings,
     )
 
     html_url = String(
         display_name="HTML URL",
         help="This is the HTML that defines the worksheet structure. HTML URL or HTML Content must be specified",
-        default="",
+        default="", #type: ignore
         scope=Scope.settings,
     )
 
     html_content = String(
         display_name="HTML Content",
         help="This is the HTML that defines the worksheet structure. HTML URL or HTML Content must be specified",
-        default="",
+        default="", #type: ignore
         scope=Scope.settings,
         multiline_editor=True,
     )
@@ -55,18 +55,18 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     initial_repeats = Integer(
         display_name="Initial Repeats",
         help="This is the number of repeated sections that should be displayed initially",
-        default=0,
+        default=0, #type: ignore
         scope=Scope.settings,
     )
 
     student_answer = Dict(
-        default={},
+        default={},#type: ignore
         scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
     )
 
     added_repeats = Integer(
-        default=0,
+        default=0, #type: ignore
         scope=Scope.user_state,
         help="Number of clones of the repeating section that the student added",
     )
@@ -74,7 +74,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     disable_cache = Boolean(
         display_name="Disable Cache",
         help="Disable caching of the HTML and CSS files (for testing updates to these files)",
-        default=False,
+        default=False, #type: ignore
         scope=Scope.settings,
     )
 
@@ -236,6 +236,16 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                         display_name="Test 2"
                         html_url="https://imsimbi-documents-public.s3.amazonaws.com/workbooks/worksheet-activities.html"
                         initial_repeats="2"
+                    >
+                    </worksheet>
+                    """,
+            ),
+            (
+                "Worksheet Leadership qualities",
+                """
+                    <worksheet
+                        display_name="Leadership qualities"
+                        html_url="https://imsimbi-documents-public.s3.us-east-1.amazonaws.com/workbooks/leadership-roles-and-qualities.html"
                     >
                     </worksheet>
                     """,
