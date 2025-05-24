@@ -33,21 +33,21 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     display_name = String(
         display_name="Display Name",
         help="This is the title for this question type",
-        default="Worksheet", #type: ignore
+        default="Worksheet",
         scope=Scope.settings,
     )
 
     html_url = String(
         display_name="HTML URL",
         help="This is the HTML that defines the worksheet structure. HTML URL or HTML Content must be specified",
-        default="", #type: ignore
+        default="",
         scope=Scope.settings,
     )
 
     html_content = String(
         display_name="HTML Content",
         help="This is the HTML that defines the worksheet structure. HTML URL or HTML Content must be specified",
-        default="", #type: ignore
+        default="",
         scope=Scope.settings,
         multiline_editor=True,
     )
@@ -55,18 +55,18 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     initial_repeats = Integer(
         display_name="Initial Repeats",
         help="This is the number of repeated sections that should be displayed initially",
-        default=0, #type: ignore
+        default=0,
         scope=Scope.settings,
     )
 
     student_answer = Dict(
-        default={},#type: ignore
+        default={},
         scope=Scope.user_state,
         help="A map of the user responses on the worksheet",
     )
 
     added_repeats = Integer(
-        default=0, #type: ignore
+        default=0,
         scope=Scope.user_state,
         help="Number of clones of the repeating section that the student added",
     )
@@ -74,7 +74,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
     disable_cache = Boolean(
         display_name="Disable Cache",
         help="Disable caching of the HTML and CSS files (for testing updates to these files)",
-        default=False, #type: ignore
+        default=False,
         scope=Scope.settings,
     )
 
@@ -93,7 +93,8 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
             if self.disable_cache:
                 self.resourceCache.pop(url, None)
             response = requests.get(url, timeout=10)
-            log.info("resource_from_url request %s %i", url, response.status_code)
+            log.info("resource_from_url request %s %i",
+                     url, response.status_code)
             if response.status_code == requests.codes.ok:  # pylint: disable=no-member
                 data = response.text
                 self.resourceCache[url] = data
@@ -123,9 +124,7 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
         )
         try:
             html_ws = (
-                f'<div id="worksheet-{instance_id}" class="worksheet-root">'
-                + content
-                + "</div>"
+                f'<div id="worksheet-{instance_id}" class="worksheet-root">{content}</div>'
             )
             tree = html.fragment_fromstring(html_ws)
             repeat_element_list = tree.xpath(
@@ -148,10 +147,12 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                             )
                             for input_element in inputs:
                                 name = (
-                                    input_element.get("name") + "[" + str(count + 1) + "]"
+                                    input_element.get(
+                                        "name") + "[" + str(count + 1) + "]"
                                 )
                                 input_element.set("name", name)
-                            clone.set("class", clone.get("class") + " repeat-clone")
+                            clone.set("class", clone.get(
+                                "class") + " repeat-clone")
                             repeat_element.getparent().append(clone)
                         except Exception as ex:
                             log.info(

@@ -1,63 +1,5 @@
 /* table formatting */
 
-body {
-    font-family: Helvetica, Arial, Sans-Serif;
-}
-
-.xblock-table {
-    width: 100%;
-    min-width: 600px;
-}
-
-.xblock-table .header {
-    background-color: rgb(255, 218, 153);
-    padding: 5px 10px;
-}
-
-.xblock-table td.static {
-    background-color: rgb(218, 218, 218);
-    padding: 5px 10px;
-}
-
-.xblock-table td.input {
-    background-color: rgb(241, 241, 241);
-    color: rgb(172, 172, 172);
-}
-
-.xblock-table td.input pre {
-    padding: 5px 10px;
-}
-
-.xblock-table td.input.value {
-    background-color: rgb(241, 241, 241);
-    color: rgb(32, 32, 32);
-}
-
-.xblock-table td button {
-    border-radius: 50%;
-    border: 1px solid #444;
-    color: #222;
-    background: white;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-}
-
-.xblock-table td button:active {
-    border-radius: 50%;
-    border: 1px solid #bbb;
-    color: #222;
-    background: #ddd;
-    width: 25px;
-    height: 25px;
-    font-size: 100%;
-}
-
-/* .xbt-table {
-    display: flex;
-    flex-direction: column;
-  } */
-
 .xbt-row {
     display: table-row;
     /* flex-direction: row; */
@@ -122,28 +64,28 @@ body {
     font-size: 100%;
 }
 
-#buttons button {
+.worksheet-root #buttons button {
     background-color: #f1bb4e;
 }
-#buttons button:hover {
+.worksheet-root #buttons button:hover {
     /* border-color: rgba(196,196,196,1); */
     background-color: rgb(226, 172, 62);
 }
 
-button.submit {
+.worksheet-root button.submit {
     background-color: #156bbb;
 }
-button.submit:hover {
+.worksheet-root button.submit:hover {
     background-color: rgb(33, 98, 160) !important;
 }
-button.submit:focus {
+.worksheet-root button.submit:focus {
     box-shadow: none;
 }
 
-button.submit:active {
+.worksheet-root button.submit:active {
     background-color: rgb(33, 98, 160);
 }
-button.submit:disabled {
+.worksheet-root button.submit:disabled {
     background-color: rgb(116, 139, 160) !important;
 }
 
@@ -165,7 +107,7 @@ button.submit:disabled {
     background-image: none !important;
 }
 
-#buttons button:active {
+.worksheet-root #buttons button:active {
     background-color: #e4a01a;
 }
 
@@ -192,7 +134,7 @@ button.submit:disabled {
 }
 
 @media all and (max-width: 30em) {
-    #buttons button {
+    .worksheet-root #buttons button {
         display: block;
         margin: 0.2em auto;
     }
