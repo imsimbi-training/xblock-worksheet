@@ -1,6 +1,7 @@
 """A worksheet in structured using HTML/CSS that the student fills out with multiple free text responses."""
 
 import importlib
+import html as html_
 import logging
 import requests
 import pkg_resources
@@ -123,10 +124,24 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
             )
         )
         try:
-            html_ws = (
-                f'<div id="worksheet-{instance_id}" class="worksheet-root">{content}</div>'
-            )
-            tree = html.fragment_fromstring(html_ws)
+            # Create tree from content
+            content_tree = html.fragment_fromstring(
+                content, create_parent='div')
+
+            # Look for body tag and use the child of the body
+            # because we cannot have a body in our injected snippet
+            body_elements = content_tree.xpath('.//body')
+            if body_elements:
+                content_tree = body_elements[0]
+
+            # Create wrapper div with tree as its only child
+            tree = html.Element('div', attrib={
+                'id': f'worksheet-{instance_id}',
+                'class': 'worksheet-root'
+            })
+            tree.append(content_tree)
+
+            # process a repeat element if it exists
             repeat_element_list = tree.xpath(
                 "//*[contains(concat(' ', @class, ' '), ' repeat ')]"
             )
@@ -247,6 +262,16 @@ class WorksheetBlock(StudioEditableXBlockMixin, XBlock):
                     <worksheet
                         display_name="Leadership qualities"
                         html_url="https://imsimbi-documents-public.s3.us-east-1.amazonaws.com/workbooks/leadership-roles-and-qualities.html"
+                    >
+                    </worksheet>
+                    """,
+            ),
+            (
+                "Worksheet with body div",
+                f"""
+                    <worksheet
+                        display_name="With body div"
+                        html_content="{html_.escape('<!DOCTYPE html><html><head></head><body><div><div class="xbt-table"><div class="xbt-row"><div class="xbt-cell header">Type of Communication Method</div><div class="xbt-cell header">Examples of the Communication Method</div></div><div class="xbt-row"><div name="com-1" class="xbt-cell input">1.1)</div><div name="example-1" class="xbt-cell input">1.2)</div></div><div class="xbt-row"><div name="com-2" class="xbt-cell input">2.1)</div><div name="example-2" class="xbt-cell input">2.2)</div></div><div class="xbt-row"><div name="com-3" class="xbt-cell input">3.1)</div><div name="example-3" class="xbt-cell input">3.2)</div></div><div class="xbt-row"><div name="com-4" class="xbt-cell input">4.1)</div><div name="example-4" class="xbt-cell input">4.2)</div></div></div></div></body></html>', quote=True)}"
                     >
                     </worksheet>
                     """,
